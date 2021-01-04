@@ -1,11 +1,13 @@
 {
-  "name": "backend",
+  "name": "passnotes",
   "version": "1.0.0",
-  "description": "backend for passnotes",
+  "description": "React.js implementation of passnotes",
   "main": "./api/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./api/server.js"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon api/server.js",
+    "client": "node start-client.js"
   },
   "author": "azhad syed",
   "license": "ISC",
@@ -16,6 +18,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "concurrently": "^5.3.0",
     "nodemon": "^2.0.6"
   }
 }

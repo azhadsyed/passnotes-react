@@ -1,6 +1,16 @@
 import React from "react";
+import Create from "./components/Create";
 import ReactDOM from "react-dom";
 import "./index.css";
+
+//router boiler plate ?
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 
 function Square(props) {
   return (
@@ -41,7 +51,7 @@ class Board extends React.Component {
   }
 }
 
-class Game extends React.Component {
+class Noteboard extends React.Component {
   handleClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
@@ -110,6 +120,35 @@ class Game extends React.Component {
   }
 }
 
+export default function App(){
+  return (
+<Router>
+{/* <div>
+  <Noteboard/>
+</div> */}
+<li><Link to="/Create">Create</Link>
+</li>
+<li><Link to="/">Noteboard</Link></li>
+<Switch>
+          <Route path="/Create">
+            <Create />
+          </Route>
+          <Route path="/">
+            <Noteboard />
+          </Route>
+        </Switch>
+</Router>
+
+  )
+}
+
 // ========================================
 
-ReactDOM.render(<Game />, document.getElementById("root"));
+// ReactDOM.render(<App/>, document.getElementById("root"));
+
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("root")
+);

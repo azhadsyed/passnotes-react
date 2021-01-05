@@ -1,16 +1,13 @@
 import React from "react";
-import Create from "./components/Create";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-//router boiler plate ?
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+//page components
+import Create from "./components/Create";
+import Authenticate from "./components/Authenticate";
 
+//router boiler plate
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function Square(props) {
   return (
@@ -120,26 +117,36 @@ class Noteboard extends React.Component {
   }
 }
 
-export default function App(){
+export default function App() {
   return (
-<Router>
-{/* <div>
+    <Router>
+      {/* <div>
   <Noteboard/>
 </div> */}
-<li><Link to="/Create">Create</Link>
-</li>
-<li><Link to="/">Noteboard</Link></li>
-<Switch>
-          <Route path="/Create">
-            <Create />
-          </Route>
-          <Route path="/">
-            <Noteboard />
-          </Route>
-        </Switch>
-</Router>
-
-  )
+      <li>
+        <Link to="/Create">Create</Link>
+      </li>
+      <li>
+        <Link to="/Authenticate">Authenticate</Link>
+      </li>
+      <li>
+        <Link to="/">Noteboard</Link>
+      </li>
+      <p></p>
+      <Switch>
+        <Route path="/Authenticate">
+          <Authenticate title="Twinkle Twinkle Little Star" />
+          {/*these properties are hard coded values for "Twinkle", replace properties with whatever the state value is for the clicked note*/}
+        </Route>
+        <Route path="/Create">
+          <Create />
+        </Route>
+        <Route path="/">
+          <Noteboard />
+        </Route>
+      </Switch>
+    </Router>
+  );
 }
 
 // ========================================

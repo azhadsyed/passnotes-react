@@ -3,7 +3,7 @@ import Create from "./components/Create";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-//router boiler plate
+//router boiler plate ?
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function Square(props) {
@@ -84,7 +84,33 @@ class Noteboard extends React.Component {
   }
 
   render() {
-    return <Create />;
+    const history = this.state.history;
+    const current = history[this.state.stepNumber];
+
+    const moves = history.map((step, move) => {
+      const desc = move ? "Go to move #" + move : "Go to game start";
+      return (
+        <li key={move}>
+          <button onClick={() => this.jumpTo(move)}> {desc} </button>{" "}
+        </li>
+      );
+    });
+
+    let status = "like my status";
+
+    return (
+      <div className="game">
+        <div className="game-board">
+          <Board
+            squares={current.squares}
+            onClick={(i) => this.handleClick(i)}
+          />{" "}
+        </div>{" "}
+        <div className="game-info">
+          <div> {status} </div> <ol> {moves} </ol>{" "}
+        </div>{" "}
+      </div>
+    );
   }
 }
 

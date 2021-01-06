@@ -12,16 +12,19 @@ const Keyboard = (props) => {
     const noteIndex = notesInOrder.indexOf(note);
     let newKeyboardState = keyboardState.slice();
     if (e.type === "keydown") {
-      newKeyboardState[noteIndex] = 1;
-    } else {
+      newKeyboardState[noteIndex] = 1; // behaving as intended
+      props.synth.triggerAttackRelease(note, 0.15); // not behaving as intended
+    } else if (e.type === "keyup") {
       newKeyboardState[noteIndex] = 0;
     }
     setKeyboardState(newKeyboardState);
   };
 
   useEffect(() => {
+    //once this component mounts...
     document.addEventListener("keydown", playKeyboard);
     document.addEventListener("keyup", playKeyboard);
+    //when this component unmounts...
     return function cleanup() {
       document.removeEventListener("keydown", playKeyboard);
       document.removeEventListener("keyup", playKeyboard);
@@ -56,7 +59,6 @@ const Keyboard = (props) => {
   return <div className="keyboard">{keys}</div>;
 };
 
-// the key's color is dependent on its class and its keyState
 const Key = (props) => {
   const style = {
     backgroundColor: props.color,

@@ -3,7 +3,7 @@ import Create from "./components/Create";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-//router boiler plate ?
+//router boiler plate 
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,9 +27,14 @@ class Board extends React.Component {
       <Square
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
+      />,
+    <Square
+        value={"hi"}
       />
     );
   }
+
+
 
   render() {
     return (
@@ -46,6 +51,10 @@ class Board extends React.Component {
           {" "}
           {this.renderSquare(6)} {this.renderSquare(7)} {this.renderSquare(8)}{" "}
         </div>{" "}
+        <div className="note-content">
+          {" "}
+          {"new element here"}
+        </div>{" "}
       </div>
     );
   }
@@ -55,9 +64,10 @@ class Noteboard extends React.Component {
   handleClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
-    const squares = current.squares.slice();
-
-    squares[i] = this.state.xIsNext ? "X" : "O";
+    const squares = current.squares.slice(); 
+    // copy the array squares. this array determines values squares display.
+    //basically, the array squares should get replaced with an array of note content
+    squares[i] = this.state.xIsNext ? "hi" : "bye";
     this.setState({
       history: history.concat([
         {
@@ -75,13 +85,60 @@ class Noteboard extends React.Component {
       xIsNext: step % 2 === 0,
     });
   }
+// lets test a function here to return a simple squares array counting backwards from 11
+testValues(){
+  const valueArray = [11,10,9,8,7,6]
+  return valueArray
+}
 
+
+sendHttpRequest(method, url, data) {
+  return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      xhr.open(method, url)
+      xhr.responseType = 'json'
+      if (data) {
+          xhr.setRequestHeader('Content-Type', 'application/json')
+      }
+      xhr.onload = () => {
+          resolve(xhr.response)
+      }
+      xhr.send(JSON.stringify(data))
+  })
+}
+
+async getNotes() {
+  let response = await this.sendHttpRequest("GET", "http://localhost:8080/noteboard")
+  return response
+}
+
+async displayNotes() {
+  const notes = await this.getNotes() // returns an array of note content
+  return notes
+}
+
+//lets try rewriting square to render note
+renderNote(i) {
+  return (
+    <Square
+      value={this.displayNotes()}
+      onClick={() => this.props.onClick(i)}
+    />,
+  <Square
+      value={"hi"}
+    />
+  );
+}
+
+
+  //this shows default state
   constructor(props) {
     super(props);
     this.state = {
       history: [
         {
-          squares: Array(9).fill(null),
+         squares: this.testValues(), //make this a function instead that's returned note content
+          //squares: this.displayNotes(),
         },
       ],
       stepNumber: 0,
@@ -90,6 +147,8 @@ class Noteboard extends React.Component {
   }
 
   render() {
+
+    
     const history = this.state.history;
     const current = history[this.state.stepNumber];
 
@@ -102,8 +161,6 @@ class Noteboard extends React.Component {
       );
     });
 
-    let status = "like my status";
-
     return (
       <div className="game">
         <div className="game-board">
@@ -111,9 +168,6 @@ class Noteboard extends React.Component {
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
           />{" "}
-        </div>{" "}
-        <div className="game-info">
-          <div> {status} </div> <ol> {moves} </ol>{" "}
         </div>{" "}
       </div>
     );
@@ -141,6 +195,37 @@ export default function App(){
 
   )
 }
+
+//talking to server
+
+// function sendHttpRequest(method, url, data) {
+//   return new Promise((resolve, reject) => {
+//       const xhr = new XMLHttpRequest()
+//       xhr.open(method, url)
+//       xhr.responseType = 'json'
+//       if (data) {
+//           xhr.setRequestHeader('Content-Type', 'application/json')
+//       }
+//       xhr.onload = () => {
+//           resolve(xhr.response)
+//       }
+//       xhr.send(JSON.stringify(data))
+//   })
+// }
+
+// async function getNotes() {
+//   let response = await sendHttpRequest("GET", "http://localhost:8080/noteboard")
+//   return response
+// }
+
+
+// async function displayNotes() {
+//   const notes = await getNotes() // returns an array of note content
+// console.log(notes)
+// }
+
+// displayNotes();
+
 
 // ========================================
 

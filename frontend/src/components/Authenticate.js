@@ -6,13 +6,15 @@ const Authenticate = (props) => {
   return (
     <section className="authenticate">
       <div>{props.title}</div>
-      <div>
+      <div className="instructions">
         Listen to the musical prompt left by the author, and perform the
         response on your QWERTY keyboard
       </div>
       <Keyboard />
-      <button>Play Again</button>
-      <button>Continue</button>
+      <div>
+        <button>Play Again</button>
+        <button>Continue</button>
+      </div>
     </section>
   );
 };

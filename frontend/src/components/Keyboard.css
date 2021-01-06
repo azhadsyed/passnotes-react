@@ -1,3 +1,23 @@
 .keyboard {
-  border: 2px solid green;
+  position: relative;
+  width: 400px;
+  height: 200px;
+}
+
+.key {
+  border: 1px solid black;
+  position: absolute;
+}
+
+.black {
+  height: 120px;
+  width: 30px;
+  background-color: black;
+  z-index: 1;
+}
+
+.white {
+  height: 200px;
+  width: 40px;
+  background-color: white;
 }

@@ -120,9 +120,6 @@ class Noteboard extends React.Component {
 export default function App() {
   return (
     <Router>
-      {/* <div>
-  <Noteboard/>
-</div> */}
       <li>
         <Link to="/Create">Create</Link>
       </li>
@@ -136,7 +133,6 @@ export default function App() {
       <Switch>
         <Route path="/Authenticate">
           <Authenticate title="Twinkle Twinkle Little Star" />
-          {/*these properties are hard coded values for "Twinkle", replace properties with whatever the state value is for the clicked note*/}
         </Route>
         <Route path="/Create">
           <Create />
@@ -150,8 +146,6 @@ export default function App() {
 }
 
 // ========================================
-
-// ReactDOM.render(<App/>, document.getElementById("root"));
 
 ReactDOM.render(
   <Router>

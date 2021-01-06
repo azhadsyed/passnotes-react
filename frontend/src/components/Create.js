@@ -4,15 +4,6 @@ import React, { Component } from "react";
 // let recordingPassword = new Step("recordingPassword", "Perform your musical response.", "Press record again to save a response to your prompt. Press stop when you're done.")
 // let confirmingPassword = new Step("confirmingPassword", "Confirm your musical response.")
 
-/*
-Roadmap:
-0. Implement spacing
-1. Implement react-piano
-2. Implement control buttons
-3. Implement navigation buttons
-4. Implement form nature of UI
-*/
-
 class Create extends Component {
   constructor(props) {
     super(props);

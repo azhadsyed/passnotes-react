@@ -6,48 +6,44 @@ import "./index.css";
 import Create from "./components/Create";
 import Authenticate from "./components/Authenticate";
 
-//router boiler plate 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+//router boiler plate
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 class Noteboard extends React.Component {
-    //this shows default state
-    constructor(props) {
-      super(props);
-      this.state = {
-          squares: [] 
-      };
-    }
+  //this shows default state
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: [],
+    };
+  }
 
   async componentDidMount() {
-      const noteContent = await getNotes();
-      this.setState({squares: noteContent.map(x => x["title"])})
-    }    
+    const noteContent = await getNotes();
+    this.setState({ squares: noteContent.map((x) => x["title"]) });
+  }
 
   handleClick(i) {
-    const squares = this.squares.slice(); 
+    const squares = this.squares.slice();
     squares[i] = "hi";
-    this.setState({squares: squares})
+    this.setState({ squares: squares });
   }
 
   render() {
-    const notes = this.state.squares.map(x => {
-      return <div className="note" onClick={console.log("fettucine")}>
+    // eventually this won't be a bullet point
+    const notes = this.state.squares.map((x) => {
+      return (
+        <div className="note" onClick={console.log("fettucine")}>
           <li>
-        <Link to="/Authenticate">Authenticate</Link>
-      </li>
-        {x}
-      </div>
-    }) 
+            <Link to="/Authenticate">Authenticate</Link>
+          </li>
+          {x}
+        </div>
+      );
+    });
     return (
       <div className="game">
-        <div className="game-board">
-          {notes}
-        </div>{" "}
+        <div className="game-board">{notes}</div>{" "}
       </div>
     );
   }
@@ -55,6 +51,8 @@ class Noteboard extends React.Component {
 
 export default function App() {
   const hue = `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`;
+  // code review: how do I change this each time I land on Authenticate?
+  // Does each visitation "mount" and "unmount" the component?
   const synth = new Synth().toDestination();
 
   return (
@@ -90,21 +88,26 @@ export default function App() {
 
 function sendHttpRequest(method, url, data) {
   return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest()
-      xhr.open(method, url)
-      xhr.responseType = 'json'
-      if (data) {
-          xhr.setRequestHeader('Content-Type', 'application/json')
-      }
-      xhr.onload = () => {
-          resolve(xhr.response)
-      }
-      xhr.send(JSON.stringify(data))})}
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.responseType = "json";
+    if (data) {
+      xhr.setRequestHeader("Content-Type", "application/json");
+    }
+    xhr.onload = () => {
+      resolve(xhr.response);
+    };
+    xhr.send(JSON.stringify(data));
+  });
+}
 
 async function getNotes() {
-  let response = await sendHttpRequest("GET", "http://localhost:8080/noteboard")
-  return response
-} 
+  let response = await sendHttpRequest(
+    "GET",
+    "http://localhost:8080/noteboard"
+  );
+  return response;
+}
 
 // ========================================
 

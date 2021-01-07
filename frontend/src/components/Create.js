@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
-//into the wind - blue wednesday
+// let recordingPrompt = new Step("recordingPrompt", "Perform your musical prompt.", "Use the keyboard to practice. \n Press record when you're ready. \n When you're done, press stop.")
+// let recordingPassword = new Step("recordingPassword", "Perform your musical response.", "Press record again to save a response to your prompt. Press stop when you're done.")
+// let confirmingPassword = new Step("confirmingPassword", "Confirm your musical response.")
 
 class Create extends Component {
   constructor(props) {
@@ -39,9 +41,5 @@ class Create extends Component {
     );
   }
 }
-
-// let recordingPrompt = new Step("recordingPrompt", "Perform your musical prompt.", "Use the keyboard to practice. \n Press record when you're ready. \n When you're done, press stop.")
-// let recordingPassword = new Step("recordingPassword", "Perform your musical response.", "Press record again to save a response to your prompt. Press stop when you're done.")
-// let confirmingPassword = new Step("confirmingPassword", "Confirm your musical response.")
 
 export default Create;

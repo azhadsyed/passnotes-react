@@ -1,7 +1,9 @@
 import React from "react";
-import Create from "./components/Create";
 import ReactDOM from "react-dom";
 import "./index.css";
+
+import Create from "./components/Create";
+import Authenticate from "./components/Authenticate";
 
 //router boiler plate 
 import {
@@ -33,39 +35,49 @@ class Noteboard extends React.Component {
 
   render() {
     const notes = this.state.squares.map(x => {
-      return <div className = "note">
+      return <div className="note" onClick={console.log("fettucine")}>
+          <li>
+        <Link to="/Authenticate">Authenticate</Link>
+      </li>
         {x}
       </div>
     }) 
-
     return (
       <div className="game">
         <div className="game-board">
           {notes}
         </div>{" "}
       </div>
-      
     );
   }
 }
 
-export default function App(){
+export default function App() {
   return (
-<Router>
-<li><Link to="/Create">Create</Link>
-</li>
-<li><Link to="/">Noteboard</Link></li>
-<Switch>
-          <Route path="/Create">
-            <Create />
-          </Route>
-          <Route path="/">
-            <Noteboard />
-          </Route>
-        </Switch>
-</Router>
-
-  )
+    <Router>
+      <li>
+        <Link to="/Create">Create</Link>
+      </li>
+      <li>
+        <Link to="/Authenticate">Authenticate</Link>
+      </li>
+      <li>
+        <Link to="/">Noteboard</Link>
+      </li>
+      <p></p>
+      <Switch>
+        <Route path="/Authenticate">
+          <Authenticate title="Twinkle Twinkle Little Star" />
+        </Route>
+        <Route path="/Create">
+          <Create />
+        </Route>
+        <Route path="/">
+          <Noteboard />
+        </Route>
+      </Switch>
+    </Router>
+  );
 }
 
 function sendHttpRequest(method, url, data) {
@@ -79,9 +91,7 @@ function sendHttpRequest(method, url, data) {
       xhr.onload = () => {
           resolve(xhr.response)
       }
-      xhr.send(JSON.stringify(data))
-  })
-}
+      xhr.send(JSON.stringify(data))})}
 
 async function getNotes() {
   let response = await sendHttpRequest("GET", "http://localhost:8080/noteboard")
@@ -89,8 +99,6 @@ async function getNotes() {
 } 
 
 // ========================================
-
-// ReactDOM.render(<App/>, document.getElementById("root"));
 
 ReactDOM.render(
   <Router>

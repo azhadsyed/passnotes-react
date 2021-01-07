@@ -6,13 +6,8 @@ import "./index.css";
 import Create from "./components/Create";
 import Authenticate from "./components/Authenticate";
 
-//router boiler plate 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+//router boiler plate
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Noteboard = (props) => {
     const notes = props.noteTitles.map(x => {
@@ -83,21 +78,26 @@ async componentDidMount() {
 
 function sendHttpRequest(method, url, data) {
   return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest()
-      xhr.open(method, url)
-      xhr.responseType = 'json'
-      if (data) {
-          xhr.setRequestHeader('Content-Type', 'application/json')
-      }
-      xhr.onload = () => {
-          resolve(xhr.response)
-      }
-      xhr.send(JSON.stringify(data))})}
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.responseType = "json";
+    if (data) {
+      xhr.setRequestHeader("Content-Type", "application/json");
+    }
+    xhr.onload = () => {
+      resolve(xhr.response);
+    };
+    xhr.send(JSON.stringify(data));
+  });
+}
 
 async function getNotes() {
-  let response = await sendHttpRequest("GET", "http://localhost:8080/noteboard")
-  return response
-} 
+  let response = await sendHttpRequest(
+    "GET",
+    "http://localhost:8080/noteboard"
+  );
+  return response;
+}
 
 // ========================================
 

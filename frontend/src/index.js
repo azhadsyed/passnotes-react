@@ -34,8 +34,13 @@ class Noteboard extends React.Component {
   async componentDidMount() {
       console.log("component did mount");
       const noteContent = await getNotes();
-      console.log(typeof(noteContent))
-      this.setState({squares: noteContent})
+      for (let i = 0; i<noteContent.length; i++)
+      {
+      console.log("notecontent i title:", noteContent[i]["title"])
+      console.log("notecontent i title is type", typeof(noteContent[i]["title"]))}
+      //this.setState({squares: noteContent})
+      this.setState({squares: [1,3,5,7]})
+      this.setState({squares: noteContent.map(x => x["title"])})
     }    
 
   handleClick(i) {

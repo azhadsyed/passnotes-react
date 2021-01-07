@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Synth } from "tone";
 import "./index.css";
 
 //page components
@@ -118,6 +119,9 @@ class Noteboard extends React.Component {
 }
 
 export default function App() {
+  const hue = `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`;
+  const synth = new Synth().toDestination();
+
   return (
     <Router>
       <li>
@@ -132,7 +136,11 @@ export default function App() {
       <p></p>
       <Switch>
         <Route path="/Authenticate">
-          <Authenticate title="Twinkle Twinkle Little Star" />
+          <Authenticate
+            title="Twinkle Twinkle Little Star"
+            hue={hue}
+            synth={synth}
+          />
         </Route>
         <Route path="/Create">
           <Create />

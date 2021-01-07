@@ -5,8 +5,6 @@ import "./index.css";
 
 import Create from "./components/Create";
 import Authenticate from "./components/Authenticate";
-import { useHistory } from "react-router-dom";
-import { withRouter } from "react-router-dom";
 
 //router boiler plate 
 import {
@@ -31,13 +29,9 @@ class Noteboard extends React.Component {
     }    
 
   handleClick(i) {
-
     // const squares = this.squares.slice(); 
     // squares[i] = "hi";
     // this.setState({squares: squares})
-
-
-
   }
 
   render() {
@@ -45,13 +39,13 @@ class Noteboard extends React.Component {
       return <a href="Authenticate">
 <button className="note">{x} </button>
         </a>
-     
     }) 
     return (
-      <div className="game">
-        <div className="game-board">
+      <div>
+      <a href="Create">
+      <button className = "plusNewNote">New Note</button>
+      </a>
           {notes}
-        </div>{" "}
       </div>
     );
   }

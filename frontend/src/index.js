@@ -24,26 +24,25 @@ class Noteboard extends React.Component {
   }
 
   handleClick(i) {
-    const squares = this.squares.slice();
-    squares[i] = "hi";
-    this.setState({ squares: squares });
+    // const squares = this.squares.slice();
+    // squares[i] = "hi";
+    // this.setState({squares: squares})
   }
 
   render() {
-    // eventually this won't be a bullet point
     const notes = this.state.squares.map((x) => {
       return (
-        <div className="note" onClick={console.log("fettucine")}>
-          <li>
-            <Link to="/Authenticate">Authenticate</Link>
-          </li>
-          {x}
-        </div>
+        <a href="Authenticate">
+          <button className="note">{x} </button>
+        </a>
       );
     });
     return (
-      <div className="game">
-        <div className="game-board">{notes}</div>{" "}
+      <div>
+        <a href="Create">
+          <button className="plusNewNote">New Note</button>
+        </a>
+        {notes}
       </div>
     );
   }

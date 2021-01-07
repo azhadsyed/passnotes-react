@@ -12,3 +12,13 @@ body {
   margin-top: 20px;
   line-height: 40px;
 }
+
+.plusNewNote{
+  background: gold;
+  opacity: 0.5;
+  text-align: center;
+  height: 300px; 
+  width: 300px;
+  margin-right: 20px;
+  margin-top: 20px;
+  line-height: 40px;}

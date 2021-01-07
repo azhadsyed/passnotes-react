@@ -11,65 +11,29 @@ import {
   Link
 } from "react-router-dom";
 
-function Square(props) {
-  return (
-    <button className="square" onClick={props.onClick}>
-      {" "}
-      {props.value}{" "}
-    </button>
-  );
-}
-
 class Noteboard extends React.Component {
     //this shows default state
     constructor(props) {
       super(props);
       this.state = {
-        // history: [
-          squares: [] //make this a function instead that's returned note content
-        // ],
+          squares: [] 
       };
     }
 
   async componentDidMount() {
-      console.log("component did mount");
       const noteContent = await getNotes();
-      for (let i = 0; i<noteContent.length; i++)
-      {
-      console.log("notecontent i title:", noteContent[i]["title"])
-      console.log("notecontent i title is type", typeof(noteContent[i]["title"]))}
-      //this.setState({squares: noteContent})
-      this.setState({squares: [1,3,5,7]})
       this.setState({squares: noteContent.map(x => x["title"])})
     }    
 
   handleClick(i) {
-    // const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    // const current = history[history.length - 1];
     const squares = this.squares.slice(); 
-    // copy the array squares. this array determines values squares display.
-    //basically, the array squares should get replaced with an array of note content
     squares[i] = "hi";
     this.setState({squares: squares})
   }
 
-  // jumpTo(step) {
-  //   this.setState({
-  //     stepNumber: step,
-  //     xIsNext: step % 2 === 0,
-  //   });
-  // }
-
-// lets test a function here to return a simple squares array counting backwards from 11
-testValues(){
-  const valueArray = [11,10,9,8,7,6]
-  return valueArray
-}
-
   render() {
-  console.log(this.state.squares)
     const notes = this.state.squares.map(x => {
-      return <div>
+      return <div className = "note">
         {x}
       </div>
     }) 
@@ -80,6 +44,7 @@ testValues(){
           {notes}
         </div>{" "}
       </div>
+      
     );
   }
 }
@@ -87,9 +52,6 @@ testValues(){
 export default function App(){
   return (
 <Router>
-{/* <div>
-  <Noteboard/>
-</div> */}
 <li><Link to="/Create">Create</Link>
 </li>
 <li><Link to="/">Noteboard</Link></li>

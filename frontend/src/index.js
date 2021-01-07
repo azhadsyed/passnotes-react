@@ -14,77 +14,72 @@ import {
   Link
 } from "react-router-dom";
 
-class Noteboard extends React.Component {
-    //this shows default state
-    constructor(props) {
-      super(props);
-      this.state = {
-          squares: [] 
-      };
-    }
-
-  async componentDidMount() {
-      const noteContent = await getNotes();
-      this.setState({squares: noteContent.map(x => x["title"])})
-    }    
-
-  handleClick(i) {
-    // const squares = this.squares.slice(); 
-    // squares[i] = "hi";
-    // this.setState({squares: squares})
-  }
-
-  render() {
-    const notes = this.state.squares.map(x => {
-      return <a href="Authenticate">
-<button className="note">{x} </button>
-        </a>
+const Noteboard = (props) => {
+    const notes = props.noteTitles.map(x => {
+      return (
+      <Link to = "/Authenticate">
+      <button className = "note"> {x} </button>
+      </Link>
+    )
     }) 
     return (
       <div>
-      <a href="Create">
-      <button className = "plusNewNote">New Note</button>
-      </a>
+<Link to = "/Create">
+  <button className = "plusNewNote">New Note</button>
+</Link>
           {notes}
       </div>
     );
   }
+
+class App extends React.Component {
+constructor(props){
+  super(props);
+  this.state = {
+    noteTitles: [],
+    noteClicked: {}
+  }
 }
 
-export default function App() {
-  const hue = `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`;
-  const synth = new Synth().toDestination();
+async componentDidMount() {
+  const noteContent = await getNotes();
+  this.setState({noteTitles: noteContent.map(x => x["title"])})
+}   
 
-  return (
-    <Router>
-      <li>
-        <Link to="/Create">Create</Link>
-      </li>
-      <li>
-        <Link to="/Authenticate">Authenticate</Link>
-      </li>
-      <li>
-        <Link to="/">Noteboard</Link>
-      </li>
-      <p></p>
-      <Switch>
-        <Route path="/Authenticate">
-          <Authenticate
-            title="Twinkle Twinkle Little Star"
-            hue={hue}
-            synth={synth}
-          />
-        </Route>
-        <Route path="/Create">
-          <Create />
-        </Route>
-        <Route path="/">
-          <Noteboard />
-        </Route>
-      </Switch>
-    </Router>
-  );
-}
+  render(){
+    console.log(this.state.noteTitles)
+    const hue = `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`;
+    const synth = new Synth().toDestination();  
+    return (
+      <Router>
+        <li>
+          <Link to="/Create">Create</Link>
+        </li>
+        <li>
+          <Link to="/Authenticate">Authenticate</Link>
+        </li>
+        <li>
+          <Link to="/">Noteboard</Link>
+        </li>
+        <p></p>
+        <Switch>
+          <Route path="/Authenticate">
+            <Authenticate
+              title="Twinkle Twinkle Little Star"
+              hue={hue}
+              synth={synth}
+            />
+          </Route>
+          <Route path="/Create">
+            <Create />
+          </Route>
+          <Route path="/">
+            <Noteboard noteTitles = {this.state.noteTitles}/>
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }}
 
 function sendHttpRequest(method, url, data) {
   return new Promise((resolve, reject) => {

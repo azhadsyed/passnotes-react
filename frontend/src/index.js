@@ -3,115 +3,50 @@ import ReactDOM from "react-dom";
 import { Synth } from "tone";
 import "./index.css";
 
-//page components
 import Create from "./components/Create";
 import Authenticate from "./components/Authenticate";
 
-//router boiler plate
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-function Square(props) {
-  return (
-    <button className="square" onClick={props.onClick}>
-      {" "}
-      {props.value}{" "}
-    </button>
-  );
-}
-
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <div>
-        <div className="board-row">
-          {" "}
-          {this.renderSquare(0)} {this.renderSquare(1)} {this.renderSquare(2)}{" "}
-        </div>{" "}
-        <div className="board-row">
-          {" "}
-          {this.renderSquare(3)} {this.renderSquare(4)} {this.renderSquare(5)}{" "}
-        </div>{" "}
-        <div className="board-row">
-          {" "}
-          {this.renderSquare(6)} {this.renderSquare(7)} {this.renderSquare(8)}{" "}
-        </div>{" "}
-      </div>
-    );
-  }
-}
+//router boiler plate 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 class Noteboard extends React.Component {
+    //this shows default state
+    constructor(props) {
+      super(props);
+      this.state = {
+          squares: [] 
+      };
+    }
+
+  async componentDidMount() {
+      const noteContent = await getNotes();
+      this.setState({squares: noteContent.map(x => x["title"])})
+    }    
+
   handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
-    const squares = current.squares.slice();
-
-    squares[i] = this.state.xIsNext ? "X" : "O";
-    this.setState({
-      history: history.concat([
-        {
-          squares: squares,
-        },
-      ]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
-    });
-  }
-
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: step % 2 === 0,
-    });
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      history: [
-        {
-          squares: Array(9).fill(null),
-        },
-      ],
-      stepNumber: 0,
-      xIsNext: true,
-    };
+    const squares = this.squares.slice(); 
+    squares[i] = "hi";
+    this.setState({squares: squares})
   }
 
   render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-
-    const moves = history.map((step, move) => {
-      const desc = move ? "Go to move #" + move : "Go to game start";
-      return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}> {desc} </button>{" "}
-        </li>
-      );
-    });
-
-    let status = "like my status";
-
+    const notes = this.state.squares.map(x => {
+      return <div className="note" onClick={console.log("fettucine")}>
+          <li>
+        <Link to="/Authenticate">Authenticate</Link>
+      </li>
+        {x}
+      </div>
+    }) 
     return (
       <div className="game">
         <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
-          />{" "}
-        </div>{" "}
-        <div className="game-info">
-          <div> {status} </div> <ol> {moves} </ol>{" "}
+          {notes}
         </div>{" "}
       </div>
     );
@@ -152,6 +87,24 @@ export default function App() {
     </Router>
   );
 }
+
+function sendHttpRequest(method, url, data) {
+  return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      xhr.open(method, url)
+      xhr.responseType = 'json'
+      if (data) {
+          xhr.setRequestHeader('Content-Type', 'application/json')
+      }
+      xhr.onload = () => {
+          resolve(xhr.response)
+      }
+      xhr.send(JSON.stringify(data))})}
+
+async function getNotes() {
+  let response = await sendHttpRequest("GET", "http://localhost:8080/noteboard")
+  return response
+} 
 
 // ========================================
 

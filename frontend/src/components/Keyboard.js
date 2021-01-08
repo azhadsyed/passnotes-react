@@ -6,14 +6,13 @@ const Keyboard = (props) => {
   let n = notesInOrder.length;
   const [keyboardState, setKeyboardState] = useState(Array(n).fill(0));
 
-  //playKeyboard modifies the "state" of the Keyboard, where 1 means a key is pressed down
   const playKeyboard = (e) => {
     const note = keyToNote[e.key];
     const noteIndex = notesInOrder.indexOf(note);
     let newKeyboardState = keyboardState.slice();
     if (e.type === "keydown") {
       newKeyboardState[noteIndex] = 1;
-      props.synth.triggerAttackRelease(note, 0.15); //code review: how to make this polyphonic
+      props.synth.triggerAttackRelease(note, 0.1); //code review: how to make this polyphonic
     } else if (e.type === "keyup") {
       newKeyboardState[noteIndex] = 0;
     }
@@ -24,12 +23,13 @@ const Keyboard = (props) => {
     //once this component mounts...
     document.addEventListener("keydown", playKeyboard);
     document.addEventListener("keyup", playKeyboard);
+
     //when this component unmounts...
     return function cleanup() {
       document.removeEventListener("keydown", playKeyboard);
       document.removeEventListener("keyup", playKeyboard);
     };
-  });
+  }, []);
 
   let iWhite = 0;
   const keys = notesInOrder.map((note, index) => {

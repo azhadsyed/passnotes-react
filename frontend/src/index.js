@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Synth } from "tone";
 
 import Create from "./components/Create";
 import ViewReply from "./components/ViewReply";
 // import Example from "./components/ViewReply";
 import Authenticate from "./components/Authenticate";
-import { getNotes } from "./components/Methods";
+import { getNotes } from "./components/helpers";
 import "./index.css";
 
 //router boiler plate
@@ -35,7 +34,6 @@ const Note = (props) => {
 const Noteboard = (props) => {
   const notes = props.noteObjects.map((note) => {
     const { _id, title, prompt } = note;
-    const path = "/Authenticate";
 
     return <Note key={_id} id={_id} title={title} prompt={prompt} />;
   });
@@ -69,8 +67,6 @@ class App extends React.Component {
   }
 
   render() {
-    const synth = new Synth().toDestination(); // why can't we set variables in useEffect?
-
     return (
       <Router>
         <li>

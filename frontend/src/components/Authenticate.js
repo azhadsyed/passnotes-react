@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Synth } from "tone";
+
 import Keyboard from "./Keyboard";
 import { keyToNote } from "./Constants";
 import "./Authenticate.css";
@@ -6,10 +8,11 @@ import "./Authenticate.css";
 //
 
 const Authenticate = (props) => {
+  console.log(props.location.state); // router unpacking here needs to be solved
   const [buffer, setBuffer] = useState([]);
 
-  const hue = props.hue;
-  const synth = props.synth;
+  const hue = `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`;
+  const synth = new Synth().toDestination();
 
   const writeToBuffer = (e) => {
     const newBuffer = buffer.slice();

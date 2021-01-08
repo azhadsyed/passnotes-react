@@ -1,50 +1,80 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Synth } from "tone";
-import "./index.css";
 
 import Create from "./components/Create";
 import Authenticate from "./components/Authenticate";
+import { getNotes } from "./components/Methods";
+import "./index.css";
 
 //router boiler plate
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+const Note = (props) => {
+  //Code Review: Poor man's destructuring, workaround until I can figure out the syntax
+  const id = props["id"];
+  const title = props["title"];
+  const prompt = props["prompt"];
+
+  const state = {
+    id: id,
+    title: title,
+    prompt: prompt,
+  };
+
+  return (
+    <Link
+      to={{
+        pathname: "/Authenticate",
+        state: { title: "Game of Thrones" },
+      }}
+    >
+      <button className="note">{title}</button>
+    </Link>
+  );
+};
+
 const Noteboard = (props) => {
-    const notes = props.noteTitles.map(x => {
-      return (
-      <Link to = "/Authenticate">
-      <button className = "note"> {x} </button>
-      </Link>
-    )
-    }) 
+  const notes = props.noteObjects.map((note) => {
+    const { _id, title, prompt } = note;
+    const path = "/Authenticate";
+
     return (
-      <div>
-<Link to = "/Create">
-  <button className = "plusNewNote">New Note</button>
-</Link>
-          {notes}
-      </div>
+      <Note key={_id} id={_id} title={title} prompt={prompt} path={path} />
     );
-  }
+  });
+
+  return (
+    <div>
+      <Link to="/Create">
+        <button className="plusNewNote">New Note</button>
+      </Link>
+      {notes}
+    </div>
+  );
+};
 
 class App extends React.Component {
-constructor(props){
-  super(props);
-  this.state = {
-    noteTitles: [],
-    noteClicked: {}
+  constructor(props) {
+    super(props);
+    this.state = {
+      noteTitles: [],
+      noteObjects: [],
+      noteClicked: {},
+    };
   }
-}
 
-async componentDidMount() {
-  const noteContent = await getNotes();
-  this.setState({noteTitles: noteContent.map(x => x["title"])})
-}   
+  async componentDidMount() {
+    const noteContent = await getNotes();
+    this.setState({
+      noteTitles: noteContent.map((x) => x["title"]),
+      noteObjects: noteContent,
+    });
+  }
 
-  render(){
-    console.log(this.state.noteTitles)
-    const hue = `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`;
-    const synth = new Synth().toDestination();  
+  render() {
+    const synth = new Synth().toDestination(); // why can't we set variables in useEffect?
+
     return (
       <Router>
         <li>
@@ -58,52 +88,20 @@ async componentDidMount() {
         </li>
         <p></p>
         <Switch>
-          <Route path="/Authenticate">
-            <Authenticate
-              title="Twinkle Twinkle Little Star"
-              hue={hue}
-              synth={synth}
-            />
-          </Route>
-          <Route path="/Create">
-            <Create />
-          </Route>
+          <Route component={Authenticate} path="/Authenticate" />
+          <Route component={Create} path="/Create" />
           <Route path="/">
-            <Noteboard noteTitles = {this.state.noteTitles}/>
+            <Noteboard
+              noteTitles={this.state.noteTitles}
+              noteObjects={this.state.noteObjects}
+            />
           </Route>
         </Switch>
       </Router>
     );
-  }}
-
-function sendHttpRequest(method, url, data) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url);
-    xhr.responseType = "json";
-    if (data) {
-      xhr.setRequestHeader("Content-Type", "application/json");
-    }
-    xhr.onload = () => {
-      resolve(xhr.response);
-    };
-    xhr.send(JSON.stringify(data));
-  });
-}
-
-async function getNotes() {
-  let response = await sendHttpRequest(
-    "GET",
-    "http://localhost:8080/noteboard"
-  );
-  return response;
+  }
 }
 
 // ========================================
 
-ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));

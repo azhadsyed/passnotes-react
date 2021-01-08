@@ -12,8 +12,8 @@ const Keyboard = (props) => {
     const noteIndex = notesInOrder.indexOf(note);
     let newKeyboardState = keyboardState.slice();
     if (e.type === "keydown") {
-      newKeyboardState[noteIndex] = 1; // behaving as intended
-      props.synth.triggerAttackRelease(note, 0.15); // not behaving as intended
+      newKeyboardState[noteIndex] = 1;
+      props.synth.triggerAttackRelease(note, 0.15); //code review: how to make this polyphonic
     } else if (e.type === "keyup") {
       newKeyboardState[noteIndex] = 0;
     }

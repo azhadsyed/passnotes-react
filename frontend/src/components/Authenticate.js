@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Synth } from "tone";
 
 import Keyboard from "./Keyboard";
@@ -8,15 +8,19 @@ import "./Authenticate.css";
 //
 
 const Authenticate = (props) => {
-  console.log(props.location.state); // router unpacking here needs to be solved
-  const [buffer, setBuffer] = useState([]);
+  const { id, title, prompt } = props.location.state;
 
-  const hue = `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`;
-  const synth = new Synth().toDestination();
+  const hue = useMemo(
+    () => `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`,
+    []
+  );
+  const synth = useMemo(() => new Synth().toDestination(), []);
+
+  const [buffer, setBuffer] = useState([]);
 
   const writeToBuffer = (e) => {
     const newBuffer = buffer.slice();
-    const note = keyToNote[e.key]; // code review: this is repeated code both here and in Keyboard
+    const note = keyToNote[e.key];
     newBuffer.push([Date.now(), note]);
     setBuffer(newBuffer);
   };
@@ -34,11 +38,11 @@ const Authenticate = (props) => {
     return function cleanup() {
       document.removeEventListener("keydown", writeToBuffer);
     };
-  });
+  }, []);
 
   return (
     <section className="authenticate">
-      <div>{props.title}</div>
+      <div>{title}</div>
       <div className="instructions">
         Listen to the musical prompt left by the author, and perform the
         response on your QWERTY keyboard

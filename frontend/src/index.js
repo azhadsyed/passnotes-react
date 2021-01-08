@@ -11,22 +11,19 @@ import "./index.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Note = (props) => {
-  //Code Review: Poor man's destructuring, workaround until I can figure out the syntax
-  const id = props["id"];
-  const title = props["title"];
-  const prompt = props["prompt"];
+  const { id, prompt, title } = props;
 
   const state = {
-    id: id,
-    title: title,
-    prompt: prompt,
+    id,
+    title,
+    prompt,
   };
 
   return (
     <Link
       to={{
         pathname: "/Authenticate",
-        state: { title: "Game of Thrones" },
+        state,
       }}
     >
       <button className="note">{title}</button>
@@ -39,9 +36,7 @@ const Noteboard = (props) => {
     const { _id, title, prompt } = note;
     const path = "/Authenticate";
 
-    return (
-      <Note key={_id} id={_id} title={title} prompt={prompt} path={path} />
-    );
+    return <Note key={_id} id={_id} title={title} prompt={prompt} />;
   });
 
   return (

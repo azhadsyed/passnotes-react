@@ -5,6 +5,8 @@ import Keyboard from "./Keyboard";
 import { keyToNote } from "./Constants";
 import "./Authenticate.css";
 
+import { Link } from "react-router-dom";
+
 //
 
 const Authenticate = (props) => {
@@ -52,6 +54,18 @@ const Authenticate = (props) => {
         <button onClick={clearBuffer}>Play Again</button>
         <button>Continue</button>
       </div>
+      {/* <Link to="/ViewReply">
+        <button>Take me to View / Reply</button>
+      </Link> */}
+
+      <Link
+        to={{
+          pathname: "/ViewReply",
+          state: props.location.state,
+        }}
+      >
+        <button>Take me to View / Reply</button>
+      </Link>
     </section>
   );
 };

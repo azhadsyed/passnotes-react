@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { Synth } from "tone";
 
 import Create from "./components/Create";
+import ViewReply from "./components/ViewReply";
+// import Example from "./components/ViewReply";
 import Authenticate from "./components/Authenticate";
 import { getNotes } from "./components/Methods";
 import "./index.css";
@@ -12,7 +14,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Note = (props) => {
   const { id, prompt, title } = props;
-
   const state = {
     id,
     title,
@@ -79,12 +80,16 @@ class App extends React.Component {
           <Link to="/Authenticate">Authenticate</Link>
         </li>
         <li>
+          <Link to="/ViewReply">ViewReply</Link>
+        </li>
+        <li>
           <Link to="/">Noteboard</Link>
         </li>
         <p></p>
         <Switch>
           <Route component={Authenticate} path="/Authenticate" />
           <Route component={Create} path="/Create" />
+          <Route component={ViewReply} path="/ViewReply" />
           <Route path="/">
             <Noteboard
               noteTitles={this.state.noteTitles}

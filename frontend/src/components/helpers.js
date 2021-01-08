@@ -21,4 +21,12 @@ async function getNotes() {
   return response;
 }
 
-export { getNotes };
+const play = (array, synth) => {
+  for (let i = 0; i < array.length; i++) {
+    setTimeout(function () {
+      synth.triggerAttackRelease(array[i][1], 0.1);
+    }, array[i][0]);
+  }
+};
+
+export { getNotes, play };

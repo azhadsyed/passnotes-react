@@ -1,37 +1,45 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Synth } from "tone";
 
 import Keyboard from "./Keyboard";
 import { keyToNote } from "./Constants";
+import { verifyPassword, play, processPerformance } from "./helpers";
 import "./Authenticate.css";
 
 //
 
 const Authenticate = (props) => {
-  const { id, title, prompt } = props.location.state;
-
   const hue = useMemo(
     () => `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`,
     []
   );
   const synth = useMemo(() => new Synth().toDestination(), []);
 
-  const [buffer, setBuffer] = useState([]);
+  const { id, title, prompt } = props.location.state; // bug - on navigating directly to "/Authenticate", this is undefined. Handle with rerouting?
+
+  const buffer = useRef([]);
 
   const writeToBuffer = (e) => {
-    const newBuffer = buffer.slice();
     const note = keyToNote[e.key];
-    newBuffer.push([Date.now(), note]);
-    setBuffer(newBuffer);
+    if (note) {
+      buffer.current.push([Date.now(), note]);
+    }
   };
 
   const clearBuffer = () => {
-    console.log(buffer);
-    setBuffer([]);
+    play(prompt, synth);
+    buffer.current.length = 0;
   };
 
+  const _verifyPassword = async () => {
+    const processedBuffer = processPerformance(buffer.current);
+    const response = await verifyPassword(id, processedBuffer);
+    console.log(response);
+    buffer.current.length = 0;
+  };
   useEffect(() => {
     //on component mount...
+    play(prompt, synth);
     document.addEventListener("keydown", writeToBuffer);
 
     //on unmount...
@@ -50,7 +58,7 @@ const Authenticate = (props) => {
       <Keyboard hue={hue} synth={synth} />
       <div>
         <button onClick={clearBuffer}>Play Again</button>
-        <button>Continue</button>
+        <button onClick={_verifyPassword}>Continue</button>
       </div>
     </section>
   );

@@ -21,6 +21,19 @@ async function getNotes() {
   return response;
 }
 
+async function verifyPassword(post_id, post_attempt) {
+  const requestBody = {
+    id: post_id,
+    attempt: post_attempt,
+  };
+  let response = await sendHttpRequest(
+    "POST",
+    `http://localhost:8080/auth/`,
+    requestBody
+  );
+  return response;
+}
+
 const play = (array, synth) => {
   for (let i = 0; i < array.length; i++) {
     setTimeout(function () {
@@ -29,4 +42,13 @@ const play = (array, synth) => {
   }
 };
 
-export { getNotes, play };
+const processPerformance = (array) => {
+  let subtractMe = array[0][0];
+  let relativeArray = array;
+  for (let i = 0; i < array.length; i++) {
+    relativeArray[i][0] -= subtractMe;
+  }
+  return relativeArray;
+};
+
+export { getNotes, verifyPassword, play, processPerformance };

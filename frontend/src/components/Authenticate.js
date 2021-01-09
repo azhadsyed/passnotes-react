@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import { Synth } from "tone";
 
 import Keyboard from "./Keyboard";
@@ -6,20 +7,20 @@ import { keyToNote } from "./Constants";
 import { verifyPassword, play, processPerformance } from "./helpers";
 import "./Authenticate.css";
 
-import { Link } from "react-router-dom";
-
-//
-
 const Authenticate = (props) => {
+  let history = useHistory();
+
   const hue = useMemo(
     () => `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`,
     []
   );
   const synth = useMemo(() => new Synth().toDestination(), []);
 
-  const { id, title, prompt } = props.location.state; // bug - on navigating directly to "/Authenticate", this is undefined. Handle with rerouting?
+  const { id, title, prompt } = props.location.state; // bug - on navigating directly to "/Authenticate", this is undefined. Handle conditionally or with rerouting?
 
   const buffer = useRef([]);
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const writeToBuffer = (e) => {
     const note = keyToNote[e.key];
@@ -33,11 +34,16 @@ const Authenticate = (props) => {
     buffer.current.length = 0;
   };
 
-  const _verifyPassword = async () => {
+  const validateAttempt = async () => {
     const processedBuffer = processPerformance(buffer.current);
     const response = await verifyPassword(id, processedBuffer);
-    console.log(response);
     buffer.current.length = 0;
+    if (response.content) {
+      history.push("/ViewReply", { id, title, content: response.content });
+      setErrorMessage("correct password!");
+    } else {
+      setErrorMessage("incorrect password, try again.");
+    }
   };
   useEffect(() => {
     //on component mount...
@@ -60,22 +66,13 @@ const Authenticate = (props) => {
       <Keyboard hue={hue} synth={synth} />
       <div>
         <button onClick={clearBuffer}>Play Again</button>
-        <button onClick={_verifyPassword}>Continue</button>
+        <button onClick={validateAttempt}>Continue</button>
+        <div>{errorMessage}</div>
       </div>
-      {/* <Link to="/ViewReply">
-        <button>Take me to View / Reply</button>
-      </Link> */}
-
-      <Link
-        to={{
-          pathname: "/ViewReply",
-          state: props.location.state,
-        }}
-      >
-        <button>Take me to View / Reply</button>
-      </Link>
     </section>
   );
 };
 
 export default Authenticate;
+
+// ghost player to play the prompt (different color than the user)

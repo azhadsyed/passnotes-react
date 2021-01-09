@@ -1,15 +1,28 @@
 import React, { useState } from "react";
 
 const ViewReply = (props) => {
-  const { id, title, prompt } = props.location.state;
+  let state;
+  if (props.location.state) {
+    state = props.location.state;
+  } else {
+    // test case for development, MUST get rid of this for production
+    state = {
+      id: "4snxb",
+      title: "test title",
+      content: "test content",
+    };
+  }
+  const { id, title, content } = state;
+  console.log(title);
   // set up a variable to indicate if reply has been clicked
   const [replyClicked, setReplyState] = useState(0);
 
   return (
     <section className="ViewReply">
       <div className="instructions">
-        View or reply to secret message {title}
+        View or reply to secret message: {title}
       </div>
+      <div>{content}</div>
       {/* <div>replyClicked has state = {replyClicked}</div> */}
       <button onClick={() => setReplyState(1)}> Reply</button>
       {replyClicked === 1 ? (

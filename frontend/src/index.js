@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 
 import Create from "./components/Create";
 import ViewReply from "./components/ViewReply";
-// import Example from "./components/ViewReply";
 import Authenticate from "./components/Authenticate";
 import { getNotes } from "./components/helpers";
 import "./index.css";
@@ -100,4 +99,9 @@ class App extends React.Component {
 
 // ========================================
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("root")
+);

@@ -34,6 +34,16 @@ async function verifyPassword(post_id, post_attempt) {
   return response;
 }
 
+async function updateNote(post_id, new_content) {
+  const requestBody = { id: post_id, content: new_content };
+  let response = await sendHttpRequest(
+    "POST",
+    "http://localhost:8080/noteboard/update",
+    requestBody
+  );
+  return response;
+}
+
 const play = (array, synth) => {
   for (let i = 0; i < array.length; i++) {
     setTimeout(function () {
@@ -41,20 +51,6 @@ const play = (array, synth) => {
     }, array[i][0]);
   }
 };
-
-function saveNote() {
-  const requestBody = {
-    title: "I said",
-    content: "Flip flop flooba dooba bop",
-    prompt: [[0, "G4"]],
-    password: [[0, "D4"]],
-  };
-  sendHttpRequest(
-    "POST",
-    "http://localhost:8080/noteboard",
-    requestBody
-  ).then((response) => console.log(response, requestBody));
-}
 
 const processPerformance = (array) => {
   let subtractMe = array[0][0];
@@ -67,9 +63,9 @@ const processPerformance = (array) => {
 
 export {
   getNotes,
-  sendHttpRequest,
   verifyPassword,
   play,
   processPerformance,
-  saveNote,
+  updateNote,
+  sendHttpRequest,
 };

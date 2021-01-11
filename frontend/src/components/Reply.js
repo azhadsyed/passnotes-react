@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { sendHttpRequest } from "../components/helpers";
+import { updateNote } from "../components/helpers";
 
 class Reply extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: "" };
-
+    const thisNoteID = this.props.id;
+    const thisNoteContent = this.state.value;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -16,23 +17,12 @@ class Reply extends React.Component {
 
   handleSubmit(event) {
     //alert("You entered message: " + this.state.value);
-    this.saveNote(this.state.value);
+    this.updateNote(this.props.id, this.state.value);
     event.preventDefault();
   }
 
-  saveNote(replyMessage) {
-    // hard coded for now...
-    const requestBody = {
-      title: "pass this on",
-      content: replyMessage,
-      prompt: [[0, "E4"]],
-      password: [[0, "F4"]],
-    };
-    sendHttpRequest(
-      "POST",
-      "http://localhost:8080/noteboard",
-      requestBody
-    ).then((response) => console.log(response));
+  updateNote(thisNoteID, thisNoteContent) {
+    console.log("updated note ", thisNoteID, " with content ", thisNoteContent);
   }
 
   render() {

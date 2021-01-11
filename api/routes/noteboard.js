@@ -31,6 +31,18 @@ router.post("/", (req, res, next) => {
     });
 });
 
+router.post("/update", (req, res, next) => {
+  const id = req.body.id;
+  const content = req.body.content;
+  Note.findByIdAndUpdate(id, { content: content }, function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send("Smoky");
+    }
+  });
+});
+
 router.get("/", (req, res, next) => {
   //return all noteId's and titles found in the database
   Note.find()

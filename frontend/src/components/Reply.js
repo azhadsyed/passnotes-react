@@ -20,11 +20,11 @@ class Reply extends React.Component {
     event.preventDefault();
   }
 
-  saveNote() {
+  saveNote(replyMessage) {
     // hard coded for now...
     const requestBody = {
       title: "pass this on",
-      content: "I wasn't really looking for somebody",
+      content: replyMessage,
       prompt: [[0, "E4"]],
       password: [[0, "F4"]],
     };

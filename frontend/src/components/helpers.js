@@ -42,6 +42,20 @@ const play = (array, synth) => {
   }
 };
 
+function saveNote() {
+  const requestBody = {
+    title: "I said",
+    content: "Flip flop flooba dooba bop",
+    prompt: [[0, "G4"]],
+    password: [[0, "D4"]],
+  };
+  sendHttpRequest(
+    "POST",
+    "http://localhost:8080/noteboard",
+    requestBody
+  ).then((response) => console.log(response, requestBody));
+}
+
 const processPerformance = (array) => {
   let subtractMe = array[0][0];
   let relativeArray = array;
@@ -51,4 +65,11 @@ const processPerformance = (array) => {
   return relativeArray;
 };
 
-export { getNotes, verifyPassword, play, processPerformance };
+export {
+  getNotes,
+  sendHttpRequest,
+  verifyPassword,
+  play,
+  processPerformance,
+  saveNote,
+};

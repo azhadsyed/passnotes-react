@@ -2,11 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Create from "./components/Create";
-<<<<<<< HEAD
 import View from "./components/View";
-=======
-import ViewReply from "./components/ViewReply";
->>>>>>> 377706d1364379bb851a3338d986292dc4a1a2ab
 import Authenticate from "./components/Authenticate";
 import { getNotes } from "./components/helpers";
 import "./index.css";

@@ -39,11 +39,7 @@ const Authenticate = (props) => {
     const response = await verifyPassword(id, processedBuffer);
     buffer.current.length = 0;
     if (response.content) {
-<<<<<<< HEAD
       history.push("/View", { id, title, content: response.content });
-=======
-      history.push("/ViewReply", { id, title, content: response.content });
->>>>>>> 377706d1364379bb851a3338d986292dc4a1a2ab
       setErrorMessage("correct password!");
     } else {
       setErrorMessage("incorrect password, try again.");

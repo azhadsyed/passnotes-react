@@ -17,12 +17,8 @@ class Reply extends React.Component {
 
   handleSubmit(event) {
     //alert("You entered message: " + this.state.value);
-    this.updateNote(this.props.id, this.state.value);
+    updateNote("5fcd27f1e359f65dc0d8e3f6", this.state.value); //hard code twinkle twinkle id for now
     event.preventDefault();
-  }
-
-  updateNote(thisNoteID, thisNoteContent) {
-    console.log("updated note ", thisNoteID, " with content ", thisNoteContent);
   }
 
   render() {

@@ -38,7 +38,7 @@ router.post("/update", (req, res, next) => {
     if (err) {
       res.send(err);
     } else {
-      res.send("Smoky");
+      res.send(result);
     }
   });
 });

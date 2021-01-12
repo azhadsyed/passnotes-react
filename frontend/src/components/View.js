@@ -32,7 +32,11 @@ const View = (props) => {
       <div className="viewNoteContent">
         <NewlineText text={renderContent} />
       </div>
-      <button onClick={() => setReplyState(1)}> Reply</button>
+      {replyClicked === 0 ? (
+        <button onClick={() => setReplyState(1)}> Reply</button>
+      ) : (
+        <div></div>
+      )}
       {replyClicked === 1 ? <Reply id={id} content={content} /> : <div></div>}
     </section>
   );

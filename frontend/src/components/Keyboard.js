@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { notesInOrder, keyToNote } from "./Constants";
+import { notesInOrder, keyToNote } from "./constants";
 import "./Keyboard.css";
+
+/* code review - an instance of tone.Synth() is being created in both authenticate 
+and create. Is it worthwhile to use one instance for both components ? Should 
+we refactor using React.Context ? */
 
 const Keyboard = (props) => {
   let n = notesInOrder.length;
@@ -23,12 +27,14 @@ const Keyboard = (props) => {
     //once this component mounts...
     document.addEventListener("keydown", playKeyboard);
     document.addEventListener("keyup", playKeyboard);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     //when this component unmounts...
     return function cleanup() {
       document.removeEventListener("keydown", playKeyboard);
       document.removeEventListener("keyup", playKeyboard);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let iWhite = 0;

@@ -15,9 +15,16 @@ class Reply extends React.Component {
     this.setState({ value: event.target.value });
   }
 
+  //for appending to work, make sure you go through noteboard every time!
+  // otherwise it doesn't re-grab updated notes from database.
+  // this isn't actually a problem since it's how we want website to eventually flow
+
   handleSubmit(event) {
-    //alert("You entered message: " + this.state.value);
-    updateNote("5fcd27f1e359f65dc0d8e3f6", this.state.value); //hard code twinkle twinkle id for now
+    console.log(
+      "current note content is",
+      this.props.content + this.state.value
+    );
+    updateNote(this.props.id, this.props.content + this.state.value);
     event.preventDefault();
   }
 

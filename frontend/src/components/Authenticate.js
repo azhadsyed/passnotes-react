@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Synth } from "tone";
 
 import Keyboard from "./Keyboard";
-import { keyToNote } from "./Constants";
+import { keyToNote } from "./constants";
 import { verifyPassword, play, processPerformance } from "./helpers";
 import "./Authenticate.css";
 
@@ -22,6 +22,7 @@ const Authenticate = (props) => {
 
   const [errorMessage, setErrorMessage] = useState("");
 
+  // code review: this exact code needs to exist in Authenticate.js and Create.js. How do I deduplicate??
   const writeToBuffer = (e) => {
     const note = keyToNote[e.key];
     if (note) {
@@ -54,6 +55,7 @@ const Authenticate = (props) => {
     return function cleanup() {
       document.removeEventListener("keydown", writeToBuffer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

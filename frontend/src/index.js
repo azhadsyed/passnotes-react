@@ -1,14 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Create from "./components/Create";
 import View from "./components/View";
 import Authenticate from "./components/Authenticate";
 import { getNotes } from "./components/helpers";
 import "./index.css";
-
-//router boiler plate
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Note = (props) => {
   const { id, prompt, title } = props;

@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const noteSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   title: String,
-  content: String,
+  // content: String,
+  content: Array,
   prompt: Array,
   password: Array,
 });

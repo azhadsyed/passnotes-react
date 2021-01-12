@@ -10,7 +10,7 @@ const View = (props) => {
     state = {
       id: "5fdac78eca70f62f4c35994e",
       title: "test title",
-      content: "test content",
+      content: ["green, blue, red"],
     };
   }
   const { id, title, content } = state;

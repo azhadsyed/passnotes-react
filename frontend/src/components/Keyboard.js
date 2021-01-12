@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { notesInOrder, keyToNote } from "./Constants";
+import { notesInOrder, keyToNote } from "./constants";
 import "./Keyboard.css";
 
 const Keyboard = (props) => {

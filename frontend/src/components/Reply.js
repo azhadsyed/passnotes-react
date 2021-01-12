@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { updateNote } from "../components/helpers";
+import View from "./View";
 
 class Reply extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: "" };
-    const thisNoteID = this.props.id;
-    const thisNoteContent = this.state.value;
+    //const thisNoteID = this.props.id;
+    //const thisNoteContent = this.state.value;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }

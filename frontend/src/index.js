@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Create from "./components/Create";
-import ViewReply from "./components/ViewReply";
+import View from "./components/View";
 import Authenticate from "./components/Authenticate";
 import { getNotes } from "./components/helpers";
 import "./index.css";
@@ -73,7 +73,7 @@ class App extends React.Component {
           <Link to="/Authenticate">Authenticate</Link>
         </li>
         <li>
-          <Link to="/ViewReply">ViewReply</Link>
+          <Link to="/View">View</Link>
         </li>
         <li>
           <Link to="/">Noteboard</Link>
@@ -82,7 +82,7 @@ class App extends React.Component {
         <Switch>
           <Route component={Authenticate} path="/Authenticate" />
           <Route component={Create} path="/Create" />
-          <Route component={ViewReply} path="/ViewReply" />
+          <Route component={View} path="/View" />
           <Route path="/">
             <Noteboard
               noteTitles={this.state.noteTitles}

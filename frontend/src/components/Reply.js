@@ -22,7 +22,12 @@ class Reply extends React.Component {
     this.props.content.push(this.state.value);
     updateNote(this.props.id, this.props.content);
     event.preventDefault();
-    return <div>{this.state.value}</div>;
+    return (
+      <div>
+        <div>{this.state.value}</div>
+        <Reply />
+      </div>
+    );
   }
 
   render() {
@@ -34,15 +39,19 @@ class Reply extends React.Component {
           <div></div>
         )}
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Message:
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          </label>
-          <input type="submit" value="Submit" />
+          {this.state.replySubmitted === false ? (
+            <label>
+              Message:
+              <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+              <input id="myInput" type="submit" value="Submit" />
+            </label>
+          ) : (
+            <div></div>
+          )}
         </form>
       </div>
     );

@@ -8,9 +8,9 @@ const View = (props) => {
   } else {
     // test case for development, MUST get rid of this for production
     state = {
-      id: "5fcd27f1e359f65dc0d8e3f6",
+      id: "5fdac78eca70f62f4c35994e",
       title: "test title",
-      content: "test content",
+      content: ["green, blue, red"],
     };
   }
   const { id, title, content } = state;
@@ -25,7 +25,7 @@ const View = (props) => {
       <div>{content}</div>
       {/* <div>replyClicked has state = {replyClicked}</div> */}
       <button onClick={() => setReplyState(1)}> Reply</button>
-      {replyClicked === 1 ? <Reply id={id} /> : <div></div>}
+      {replyClicked === 1 ? <Reply id={id} content={content} /> : <div></div>}
     </section>
   );
 };

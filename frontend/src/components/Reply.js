@@ -15,25 +15,32 @@ class Reply extends React.Component {
     this.setState({ value: event.target.value });
   }
 
+  //for appending to work, make sure you go through noteboard every time!
+  // otherwise it doesn't re-grab updated notes from database.
+  // this isn't actually a problem since it's how we want website to eventually flow
+  // if we want a "live chat" feature, add get notes rendering to view/reply
+
   handleSubmit(event) {
-    //alert("You entered message: " + this.state.value);
-    updateNote("5fcd27f1e359f65dc0d8e3f6", this.state.value); //hard code twinkle twinkle id for now
+    this.props.content.push(this.state.value);
+    updateNote(this.props.id, this.props.content);
     event.preventDefault();
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Message:
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Message:
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     );
   }
 }

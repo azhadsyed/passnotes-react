@@ -3,7 +3,7 @@ import { Synth } from "tone";
 
 import Keyboard from "./Keyboard";
 import { keyToNote } from "./constants.js";
-import { play, processPerformance } from "./helpers.js";
+import { play, processPerformance, sendHttpRequest } from "./helpers.js";
 import "./Create.css";
 
 // code outside of the component runs on boot but not on re-render
@@ -22,6 +22,11 @@ const instructions = [
   {
     instructions: "Confirm your musical response",
     tip: "",
+  },
+  {
+    instructions: "Leave a message!",
+    tip:
+      "your message will be accessible only by those who know your musical password",
   },
 ];
 
@@ -61,13 +66,12 @@ const NavigationButton = (props) => {
 
 const Create = (props) => {
   // initial declarations
+  // rename this variable
   const hue = useMemo(
     () => `hsl(${Math.floor(Math.random() * 255)}, 100%, 80%)`,
     []
   );
   const synth = useMemo(() => new Synth().toDestination(), []);
-
-  const [currentStep, setCurrentStep] = useState(1);
 
   // maintaining the "recording" state requires a "double hook" so that the
   // native event listeners can access the current state. see:
@@ -79,19 +83,25 @@ const Create = (props) => {
     _setRecording(bool);
   };
 
+  const [currentStep, setCurrentStep] = useState(0);
   const [playEnabled, setPlayEnabled] = useState(false);
+  const [promptArray, setPromptArray] = useState([]);
+  const [passwordArray, setPasswordArray] = useState([]);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const buffer = useRef([]);
 
   // button onClick functions
   // code review: bug: unable to actually change state using this...and state not behaving as intended?
   const clickRecord = () => {
-    console.log("firing");
     setRecording(true);
+    buffer.current.length = 0;
   };
 
   const clickStop = () => {
     setPlayEnabled(true);
+    setRecording(false);
     buffer.current = processPerformance(buffer.current);
   };
 
@@ -99,11 +109,50 @@ const Create = (props) => {
     play(buffer.current, synth);
   };
 
+  const clickPrevious = () => {
+    setCurrentStep(currentStep - 1);
+    setTitle("");
+    setContent("");
+  };
+
+  const clickNext = () => {
+    if (currentStep === 0) {
+      setPromptArray(buffer.current);
+      buffer.current.length = 0;
+    } else if (currentStep === 1) {
+      setPasswordArray(buffer.current);
+      buffer.current.length = 0;
+    }
+    setPlayEnabled(false);
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
+  };
+
+  const saveNote = () => {
+    const requestBody = {
+      title,
+      content,
+      prompt: promptArray,
+      password: passwordArray,
+    };
+    sendHttpRequest(
+      "POST",
+      "http://localhost:8080/noteboard",
+      requestBody
+    ).then((response) => console.log(response));
+  };
+
   // recording: event listener setup from here until function return
   const writeToBuffer = (e) => {
     const note = keyToNote[e.key];
-    console.log(note, recordingRef.current);
-    if (note && recordingRef) {
+    if (note && recordingRef.current) {
       buffer.current.push([Date.now(), note]);
     }
   };
@@ -117,40 +166,81 @@ const Create = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <section className="create">
-      <div>
-        Step {currentStep}: {instructions[currentStep + 1].instructions}
-      </div>
-      <div style={{ textAlign: "center" }}>{instructions[0].tip}</div>
-      <Keyboard hue={hue} synth={synth} />
-      <div className="transport">
-        <TransportButton type={"record"} enabled={true} onClick={clickRecord} />
-        <TransportButton
-          type={"stop"}
-          enabled={recording}
-          onClick={clickStop}
+  if (currentStep < 3) {
+    return (
+      <section className="create">
+        <div>
+          Step {currentStep + 1}: {instructions[currentStep].instructions}
+        </div>
+        <div style={{ textAlign: "center" }}>
+          {instructions[currentStep].tip}
+        </div>
+        <Keyboard hue={hue} synth={synth} />
+        <div className="transport">
+          <TransportButton
+            type={"record"}
+            enabled={true}
+            onClick={clickRecord}
+          />
+          <TransportButton
+            type={"stop"}
+            enabled={recording}
+            onClick={clickStop}
+          />
+          <TransportButton
+            type={"play"}
+            enabled={playEnabled}
+            onClick={clickPlay}
+          />
+        </div>
+        <div>
+          <NavigationButton
+            enabled={true}
+            label="Back"
+            onClick={clickPrevious}
+          />
+          <NavigationButton
+            enabled={playEnabled}
+            label="Next"
+            onClick={clickNext}
+          />
+        </div>
+      </section>
+    );
+  } else {
+    return (
+      <section className="create">
+        <div>
+          Step {currentStep + 1}: {instructions[currentStep].instructions}
+        </div>
+        <div style={{ textAlign: "center" }}>
+          {instructions[currentStep].tip}
+        </div>
+        <textarea
+          rows="1"
+          placeholder="write your title here"
+          onChange={handleTitleChange}
         />
-        <TransportButton
-          type={"play"}
-          enabled={playEnabled}
-          onClick={clickPlay}
+        <textarea
+          rows="5"
+          placeholder="leave your message here"
+          onChange={handleContentChange}
         />
-      </div>
-      <div>
-        <NavigationButton
-          enabled={true}
-          label="Back"
-          onClick={() => setCurrentStep(currentStep - 1)}
-        />
-        <NavigationButton
-          enabled={playEnabled}
-          label="Next"
-          onClick={() => setCurrentStep(currentStep + 1)}
-        />
-      </div>
-    </section>
-  );
+        <div>
+          <NavigationButton
+            enabled={true}
+            label="Back"
+            onClick={clickPrevious}
+          />
+          <NavigationButton
+            enabled={title.length > 0 && content.length > 0}
+            label="Save"
+            onClick={saveNote}
+          />
+        </div>
+      </section>
+    );
+  }
 };
 
 export default Create;

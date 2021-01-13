@@ -6,6 +6,14 @@ import "./Keyboard.css";
 and create. Is it worthwhile to use one instance for both components ? Should 
 we refactor using React.Context ? */
 
+const Key = (props) => {
+  const style = {
+    backgroundColor: props.color,
+    left: props.left,
+  };
+  return <div className={props.className} id={props.id} style={style}></div>;
+};
+
 const Keyboard = (props) => {
   let n = notesInOrder.length;
   const [keyboardState, setKeyboardState] = useState(Array(n).fill(0));
@@ -63,14 +71,6 @@ const Keyboard = (props) => {
   });
 
   return <div className="keyboard">{keys}</div>;
-};
-
-const Key = (props) => {
-  const style = {
-    backgroundColor: props.color,
-    left: props.left,
-  };
-  return <div className={props.className} id={props.id} style={style}></div>;
 };
 
 export default Keyboard;

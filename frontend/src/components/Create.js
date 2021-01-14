@@ -3,7 +3,11 @@ import { Synth } from "tone";
 
 import Keyboard from "./Keyboard";
 import { keyToNote } from "./constants.js";
-import { play, processPerformance, sendHttpRequest } from "./helpers.js";
+import {
+  play,
+  processPerformance,
+  sendHttpRequest,
+} from "./utilities/helpers.js";
 import "./Create.css";
 
 // code outside of the component runs on boot but not on re-render

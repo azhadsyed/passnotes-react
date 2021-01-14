@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "./ViewReply.css";
+import { sendHttpRequest } from "./utilities/helpers.js";
 
 const ViewReply = (props) => {
   let state;
@@ -7,44 +9,50 @@ const ViewReply = (props) => {
   } else {
     // test case for development, MUST get rid of this for production
     state = {
-      id: "4snxb",
-      title: "test title",
-      content: "test content",
+      id: "5fdac78eca70f62f4c35994e",
+      title: "My Note Title",
+      content: ["banana", "mango", "raspberry"],
     };
   }
   const { id, title, content } = state;
-  console.log(title);
   // set up a variable to indicate if reply has been clicked
-  const [replyClicked, setReplyState] = useState(0);
+  const [replyClicked, setReplyState] = useState(false);
+  const renderContent = (content) => {
+    return content.join("\n \n");
+  };
+
+  const NewlineText = (props) => {
+    const text = props.text;
+    return text;
+  };
+
+  const handleReply = () => {
+    return <div>You pressed reply!</div>;
+  };
+
+  const handleSubmit = () => {
+    updateNote(id, content);
+  };
+
+  const updateNote = async (post_id, new_content) => {
+    const requestBody = { id: post_id, content: new_content };
+    let response = await sendHttpRequest(
+      "POST",
+      "http://localhost:8080/noteboard/update",
+      requestBody
+    );
+    return response;
+  };
 
   return (
-    <section className="ViewReply">
-      <div className="instructions">
-        View or reply to secret message: {title}
-      </div>
-      <div>{content}</div>
-      {/* <div>replyClicked has state = {replyClicked}</div> */}
-      <button onClick={() => setReplyState(1)}> Reply</button>
-      {replyClicked === 1 ? (
-        <input type="text">Type your response here...</input>
-      ) : (
-        <div></div>
-      )}
+    <section>
+      <div className="title"> {title}</div>
+      <div className="threadReplies">{renderContent(content)}</div>
+      <button className="replyButton" onClick={() => handleReply()}>
+        Reply
+      </button>
     </section>
   );
 };
 
 export default ViewReply;
-
-// function Example() {
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <div>
-//       <p>You clicked {count} times</p>
-//       <button onClick={() => setCount(count + 1)}>Click me</button>
-//     </div>
-//   );
-// }
-
-// export default Example;

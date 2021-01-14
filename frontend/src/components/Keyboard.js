@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { notesInOrder, keyToNote } from "./constants";
+import { notesInOrder, keyToNote } from "./utilities/constants";
 import "./Keyboard.css";
 
 /* code review - an instance of tone.Synth() is being created in both authenticate 

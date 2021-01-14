@@ -1,49 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-import Create from "./components/Create";
-import View from "./components/View";
 import Authenticate from "./components/Authenticate";
-import { getNotes } from "./components/helpers";
+import Create from "./components/Create";
+import Noteboard from "./components/Noteboard.js";
+import View from "./components/View";
+import ViewReply from "./components/ViewReply.js";
+import { sendHttpRequest } from "./components/utilities/helpers.js";
 import "./index.css";
-
-const Note = (props) => {
-  const { id, prompt, title } = props;
-  const state = {
-    id,
-    title,
-    prompt,
-  };
-
-  return (
-    <Link
-      to={{
-        pathname: "/Authenticate",
-        state,
-      }}
-    >
-      <button className="note">{title}</button>
-    </Link>
-  );
-};
-
-const Noteboard = (props) => {
-  const notes = props.noteObjects.map((note) => {
-    const { _id, title, prompt } = note;
-
-    return <Note key={_id} id={_id} title={title} prompt={prompt} />;
-  });
-
-  return (
-    <div>
-      <Link to="/Create">
-        <button className="plusNewNote">New Note</button>
-      </Link>
-      {notes}
-    </div>
-  );
-};
 
 class App extends React.Component {
   constructor(props) {
@@ -56,6 +20,14 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
+    const getNotes = async () => {
+      let response = await sendHttpRequest(
+        "GET",
+        "http://localhost:8080/noteboard"
+      );
+      return response;
+    };
+
     const noteContent = await getNotes();
     this.setState({
       noteTitles: noteContent.map((x) => x["title"]),
@@ -76,6 +48,9 @@ class App extends React.Component {
           <Link to="/View">View</Link>
         </li>
         <li>
+          <Link to="/ViewReply">View & Reply (dev)</Link>
+        </li>
+        <li>
           <Link to="/">Noteboard</Link>
         </li>
         <p></p>
@@ -83,6 +58,7 @@ class App extends React.Component {
           <Route component={Authenticate} path="/Authenticate" />
           <Route component={Create} path="/Create" />
           <Route component={View} path="/View" />
+          <Route component={ViewReply} path="/ViewReply" />
           <Route path="/">
             <Noteboard
               noteTitles={this.state.noteTitles}

@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 import { Synth } from "tone";
 
 import Keyboard from "./Keyboard";
-import { keyToNote } from "./constants";
-import { verifyPassword, play, processPerformance } from "./helpers";
+import { keyToNote } from "./utilities/constants";
+import { sendHttpRequest, play, processPerformance } from "./utilities/helpers";
 import "./Authenticate.css";
 
 const Authenticate = (props) => {
@@ -35,12 +35,25 @@ const Authenticate = (props) => {
     buffer.current.length = 0;
   };
 
+  const verifyPassword = async (post_id, post_attempt) => {
+    const requestBody = {
+      id: post_id,
+      attempt: post_attempt,
+    };
+    let response = await sendHttpRequest(
+      "POST",
+      `http://localhost:8080/auth/`,
+      requestBody
+    );
+    return response;
+  };
+
   const validateAttempt = async () => {
     const processedBuffer = processPerformance(buffer.current);
     const response = await verifyPassword(id, processedBuffer);
     buffer.current.length = 0;
     if (response.content) {
-      history.push("/View", { id, title, content: response.content });
+      history.push("/ViewReply", { id, title, content: response.content });
       setErrorMessage("correct password!");
     } else {
       setErrorMessage("incorrect password, try again.");

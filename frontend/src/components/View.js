@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Reply from "./Reply.js";
 import "./ViewReply.css";
 
 const View = (props) => {
+  // useState(0);
+  // useEffect(props.location.state, []);
   let state;
   if (props.location.state) {
     state = props.location.state;
@@ -16,7 +18,7 @@ const View = (props) => {
   }
   const { id, title, content } = state;
   // set up a variable to indicate if reply has been clicked
-  const [replyClicked, setReplyState] = useState(0);
+  const [replyClicked, setReplyState] = useState(false);
   const renderContent = content.join("\n");
 
   const NewlineText = (props) => {
@@ -32,12 +34,11 @@ const View = (props) => {
       <div className="viewNoteContent">
         <NewlineText text={renderContent} />
       </div>
-      {replyClicked === 0 ? (
-        <button onClick={() => setReplyState(1)}> Reply</button>
+      {replyClicked ? (
+        <Reply id={id} content={content} />
       ) : (
-        <div></div>
+        <button onClick={() => setReplyState(true)}> Reply</button>
       )}
-      {replyClicked === 1 ? <Reply id={id} content={content} /> : <div></div>}
     </section>
   );
 };

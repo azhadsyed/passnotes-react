@@ -1,3 +1,12 @@
-.viewNoteContent {
+.threadReplies {
   white-space: pre-wrap;
+}
+
+.title {
+  font-size: 50px;
+  text-align: center;
+}
+
+.threadReplies {
+  border: 1px solid red;
 }

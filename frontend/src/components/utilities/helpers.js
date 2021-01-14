@@ -13,37 +13,6 @@ function sendHttpRequest(method, url, data) {
   });
 }
 
-async function getNotes() {
-  let response = await sendHttpRequest(
-    "GET",
-    "http://localhost:8080/noteboard"
-  );
-  return response;
-}
-
-async function verifyPassword(post_id, post_attempt) {
-  const requestBody = {
-    id: post_id,
-    attempt: post_attempt,
-  };
-  let response = await sendHttpRequest(
-    "POST",
-    `http://localhost:8080/auth/`,
-    requestBody
-  );
-  return response;
-}
-
-async function updateNote(post_id, new_content) {
-  const requestBody = { id: post_id, content: new_content };
-  let response = await sendHttpRequest(
-    "POST",
-    "http://localhost:8080/noteboard/update",
-    requestBody
-  );
-  return response;
-}
-
 const play = (array, synth) => {
   for (let i = 0; i < array.length; i++) {
     setTimeout(function () {
@@ -61,11 +30,4 @@ const processPerformance = (array) => {
   return relativeArray;
 };
 
-export {
-  getNotes,
-  verifyPassword,
-  play,
-  processPerformance,
-  updateNote,
-  sendHttpRequest,
-};
+export { sendHttpRequest, play, processPerformance };

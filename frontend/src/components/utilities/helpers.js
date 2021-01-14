@@ -1,17 +1,14 @@
-function sendHttpRequest(method, url, data) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url);
-    xhr.responseType = "json";
-    if (data) {
-      xhr.setRequestHeader("Content-Type", "application/json");
-    }
-    xhr.onload = () => {
-      resolve(xhr.response);
-    };
-    xhr.send(JSON.stringify(data));
+const sendHttpRequest = async (method, url, data) => {
+  const response = await fetch(url, {
+    method,
+    body: JSON.stringify(data),
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
-}
+  return response.json();
+};
 
 const play = (array, synth) => {
   for (let i = 0; i < array.length; i++) {

@@ -26,8 +26,8 @@ mongoose.connect(
 const app = express();
 
 //route definitions
-const NoteboardRoutes = require("./routes/noteboard");
-const AuthRoutes = require("./routes/auth");
+const NotesRoutes = require("./routes/notes");
+const PasswordsRoutes = require("./routes/passwords");
 
 //middleware
 app.use(morgan("dev"));
@@ -50,8 +50,8 @@ app.use((req, res, next) => {
 });
 
 // route requests
-app.use("/noteboard", NoteboardRoutes);
-app.use("/auth", AuthRoutes);
+app.use("/notes", NotesRoutes);
+app.use("/passwords", PasswordsRoutes);
 
 // bad route error
 app.use((req, res, next) => {

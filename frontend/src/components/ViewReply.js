@@ -10,7 +10,7 @@ const ViewReply = (props) => {
     const requestBody = { id: post_id, reply: reply };
     let response = await sendHttpRequest(
       "POST",
-      "http://localhost:8080/noteboard/update",
+      "http://localhost:8080/notes/update",
       requestBody
     );
     return response;

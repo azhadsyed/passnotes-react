@@ -42,7 +42,7 @@ const Authenticate = (props) => {
     };
     let response = await sendHttpRequest(
       "POST",
-      `http://localhost:8080/auth/`,
+      `http://localhost:8080/passwords/`,
       requestBody
     );
     return response;
@@ -75,7 +75,7 @@ const Authenticate = (props) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  //center the errorMessage in here please!!!
   return (
     <section className="authenticate">
       <div>{title}</div>

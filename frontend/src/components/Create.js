@@ -114,12 +114,13 @@ const Create = (props) => {
 
   const clickPrevious = () => {
     if (currentStep === 0) {
-      console.log("not so fast bloody bugger!");
+      history.push("/");
     } else if (currentStep === 3) {
       setTitle("");
       setContent("");
+    } else {
+      setCurrentStep(currentStep - 1);
     }
-    setCurrentStep(currentStep - 1);
   };
 
   const compareNotes = (a, b) => {
@@ -195,9 +196,9 @@ const Create = (props) => {
     };
     sendHttpRequest(
       "POST",
-      "http://localhost:8080/noteboard",
+      "http://localhost:8080/notes",
       requestBody
-    ).then(() => history.push("/Noteboard"));
+    ).then(() => history.push("/"));
     /*the default behavior on navigation back to Noteboard is to NOT reload the 
     notes so your new note appears at the bottom*/
   };
@@ -262,6 +263,7 @@ const Create = (props) => {
       </section>
     );
   } else {
+    // in this section, instruction and tooltip are duplicated. potential future refactor?
     return (
       <section className="create">
         <div>

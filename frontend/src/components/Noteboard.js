@@ -1,6 +1,7 @@
-import React from "react";
-import "./Noteboard.css";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { sendHttpRequest } from "./utilities/helpers";
+import "./Noteboard.css";
 
 const Note = (props) => {
   const { id, prompt, title } = props;
@@ -23,7 +24,22 @@ const Note = (props) => {
 };
 
 const Noteboard = (props) => {
-  const notes = props.noteObjects.map((note) => {
+  const [noteResources, setNoteResources] = useState([]);
+
+  useEffect(async () => {
+    const getNotes = async () => {
+      let response = await sendHttpRequest(
+        "GET",
+        "http://localhost:8080/notes"
+      );
+      return response;
+    };
+
+    const response = await getNotes();
+    setNoteResources(response);
+  }, []);
+
+  const notes = noteResources.map((note) => {
     const { _id, title, prompt } = note;
     return <Note key={_id} id={_id} title={title} prompt={prompt} />;
   });

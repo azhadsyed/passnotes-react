@@ -7,13 +7,14 @@ import Noteboard from "./components/Noteboard.js";
 import ViewReply from "./components/ViewReply.js";
 import { sendHttpRequest } from "./components/utilities/helpers.js";
 import "./index.css";
+import logo from "./img/logo.svg";
 
 class App extends React.Component {
   render() {
     return (
       <Router>
         <Link to="/">
-          <button className="passnotesHome">Passnotes</button>
+          <img src={logo} alt="Logo" />
         </Link>
         <p></p>
         <Switch>

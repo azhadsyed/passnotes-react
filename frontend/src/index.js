@@ -7,15 +7,17 @@ import Noteboard from "./components/Noteboard.js";
 import ViewReply from "./components/ViewReply.js";
 import { sendHttpRequest } from "./components/utilities/helpers.js";
 import "./index.css";
-import logo from "./img/logo.svg";
+import { ReactComponent as Logo } from "./img/logo.svg";
 
 class App extends React.Component {
   render() {
     return (
       <Router>
-        <Link to="/">
-          <img src={logo} alt="Logo" />
-        </Link>
+        <div className="navBar">
+          <Link to="/">
+            <Logo />
+          </Link>
+        </div>
         <p></p>
         <Switch>
           <Route component={Authenticate} path="/Authenticate" />

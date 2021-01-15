@@ -9,31 +9,6 @@ import { sendHttpRequest } from "./components/utilities/helpers.js";
 import "./index.css";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      noteTitles: [],
-      noteObjects: [],
-      noteClicked: {},
-    };
-  }
-
-  async componentDidMount() {
-    const getNotes = async () => {
-      let response = await sendHttpRequest(
-        "GET",
-        "http://localhost:8080/noteboard"
-      );
-      return response;
-    };
-
-    const noteContent = await getNotes();
-    this.setState({
-      noteTitles: noteContent.map((x) => x["title"]),
-      noteObjects: noteContent,
-    });
-  }
-
   render() {
     return (
       <Router>
@@ -54,12 +29,7 @@ class App extends React.Component {
           <Route component={Authenticate} path="/Authenticate" />
           <Route component={Create} path="/Create" />
           <Route component={ViewReply} path="/ViewReply" />
-          <Route path="/">
-            <Noteboard
-              noteTitles={this.state.noteTitles}
-              noteObjects={this.state.noteObjects}
-            />
-          </Route>
+          <Route component={Noteboard} path="/"></Route>
         </Switch>
       </Router>
     );

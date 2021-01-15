@@ -63,7 +63,7 @@ const Authenticate = (props) => {
       setErrorMessage("incorrect password, try again.");
     }
   };
-  
+
   useEffect(() => {
     //on component mount...
     play(prompt, synth);
@@ -75,7 +75,7 @@ const Authenticate = (props) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  //center the errorMessage in here please!!!
   return (
     <section className="authenticate">
       <div>{title}</div>

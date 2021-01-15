@@ -34,6 +34,7 @@ const ViewReply = (props) => {
     const newContent = await updateNote(id, response);
     updateContent(newContent);
     console.log("new content:", newContent);
+    setResponse("");
   };
 
   return (

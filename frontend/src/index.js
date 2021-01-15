@@ -37,18 +37,9 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <li>
-          <Link to="/Create">Create</Link>
-        </li>
-        <li>
-          <Link to="/Authenticate">Authenticate</Link>
-        </li>
-        <li>
-          <Link to="/ViewReply">View & Reply (dev)</Link>
-        </li>
-        <li>
-          <Link to="/">Noteboard</Link>
-        </li>
+        <Link to="/">
+          <button className="passnotesHome">Passnotes</button>
+        </Link>
         <p></p>
         <Switch>
           <Route component={Authenticate} path="/Authenticate" />

@@ -8,5 +8,13 @@
 }
 
 .threadReplies {
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  width: auto;
+  padding: 10px;
+}
+
+.replyForm {
+  background: red;
+  height: auto;
+  width: auto;
 }

@@ -63,7 +63,7 @@ const Authenticate = (props) => {
       setErrorMessage("incorrect password, try again.");
     }
   };
-  
+
   useEffect(() => {
     //on component mount...
     play(prompt, synth);

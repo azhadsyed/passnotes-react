@@ -1,24 +1,13 @@
-body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
-}
-
-.note {
-  background: gold;
-  text-align: center;
-  height: 300px; 
+.passnotesHome {
   width: 300px;
-  margin-right: 20px;
-  margin-top: 20px;
-  line-height: 40px;
-}
-
-.plusNewNote{
-  background: gold;
-  opacity: 0.5;
+  height: 100px;
+  font-style: normal;
+  font-size: 48px;
+  line-height: 60px;
+  display: flex;
+  align-items: center;
   text-align: center;
-  height: 300px; 
-  width: 300px;
-  margin-right: 20px;
-  margin-top: 20px;
-  line-height: 40px;}
+  color: black;
+  border: none;
+  background: none;
+}

@@ -20,7 +20,6 @@ const ViewReply = (props) => {
   const [submitted, setSubmitState] = useState(false);
   const [response, setResponse] = useState("");
   const [content, updateContent] = useState(props.location.state.content);
-  // let content = props.location.state.content;
 
   const renderContent = (content) => {
     return content.join("\n \n");
@@ -44,20 +43,22 @@ const ViewReply = (props) => {
       <button className="replyButton" onClick={() => setReplyState(true)}>
         Reply
       </button>
-      <form onSubmit={handleSubmit}>
-        <>
-          <label>
-            Response:
-            <input
-              type="text"
-              value={response}
-              onChange={(e) => setResponse(e.target.value)}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </>
-      </form>
-      {replyClicked === true ? <div>You clicked reply</div> : null}
+      {replyClicked ? (
+        <form onSubmit={handleSubmit}>
+          <>
+            <label>
+              Response:
+              <input
+                className="replyForm"
+                type="text"
+                value={response}
+                onChange={(e) => setResponse(e.target.value)}
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </>
+        </form>
+      ) : null}
     </section>
   );
 };

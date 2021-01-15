@@ -1,4 +1,5 @@
 import React from "react";
+import "./Noteboard.css";
 import { Link } from "react-router-dom";
 
 const Note = (props) => {

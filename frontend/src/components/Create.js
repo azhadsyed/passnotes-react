@@ -196,7 +196,7 @@ const Create = (props) => {
     };
     sendHttpRequest(
       "POST",
-      "http://localhost:8080/noteboard",
+      "http://localhost:8080/notes",
       requestBody
     ).then(() => history.push("/"));
     /*the default behavior on navigation back to Noteboard is to NOT reload the 

@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-
 const Note = require("../models/note");
 
+//for posting new notes to the database
 router.post("/", (req, res, next) => {
   // parse the Note found in the body of the request
   const note = new Note({
@@ -31,6 +31,7 @@ router.post("/", (req, res, next) => {
     });
 });
 
+//for updating a single note's content with a new reply of type String
 router.post("/update", (req, res, next) => {
   const id = req.body.id;
   const reply = req.body.reply;
@@ -49,8 +50,8 @@ router.post("/update", (req, res, next) => {
   );
 });
 
+//for getting all noteId's and titles from the database
 router.get("/", (req, res, next) => {
-  //return all noteId's and titles found in the database
   Note.find()
     .select("title _id prompt")
     .exec()
@@ -60,8 +61,8 @@ router.get("/", (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
+// for getting the prompt associated with a given note from the database
 router.get("/:noteId", (req, res, next) => {
-  // lookup the note by noteId, and return the prompt for the front-end to playback
   const id = req.params.noteId;
   Note.findById(id)
     .exec()

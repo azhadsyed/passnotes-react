@@ -32,7 +32,7 @@ const Noteboard = (props) => {
     const getNotes = async () => {
       let response = await sendHttpRequest(
         "GET",
-        "http://localhost:8080/noteboard"
+        "http://localhost:8080/notes"
       );
       return response;
     };

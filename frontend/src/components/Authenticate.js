@@ -42,7 +42,7 @@ const Authenticate = (props) => {
     };
     let response = await sendHttpRequest(
       "POST",
-      `http://localhost:8080/auth/`,
+      `http://localhost:8080/passwords/`,
       requestBody
     );
     return response;

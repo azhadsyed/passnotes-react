@@ -44,6 +44,7 @@ function authenticate(a, b) {
   return true;
 }
 
+// for comparing a password attempt against the password in the database and handling the result
 router.post("/", async (req, res, next) => {
   //step 1 - parse the request body
   var id = req.body.id;

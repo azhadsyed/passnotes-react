@@ -33,14 +33,20 @@ router.post("/", (req, res, next) => {
 
 router.post("/update", (req, res, next) => {
   const id = req.body.id;
-  const content = req.body.content;
-  Note.findByIdAndUpdate(id, { content: content }, function (err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(result);
+  const reply = req.body.reply;
+  const query = { _id: id };
+  Note.findOneAndUpdate(
+    query,
+    { $push: { content: reply } },
+    { new: true },
+    function (err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result.content);
+      }
     }
-  });
+  );
 });
 
 router.get("/", (req, res, next) => {

@@ -6,8 +6,8 @@ const ViewReply = (props) => {
   const id = props.location.state.id;
   const title = props.location.state.title;
 
-  const updateNote = async (post_id, new_content) => {
-    const requestBody = { id: post_id, content: new_content };
+  const updateNote = async (post_id, reply) => {
+    const requestBody = { id: post_id, reply: reply };
     let response = await sendHttpRequest(
       "POST",
       "http://localhost:8080/noteboard/update",
@@ -16,32 +16,30 @@ const ViewReply = (props) => {
     return response;
   };
 
-  // const { id, title, content } = state;
-  // set up a variable to indicate if reply has been clicked
   const [replyClicked, setReplyState] = useState(false);
   const [submitted, setSubmitState] = useState(false);
   const [response, setResponse] = useState("");
   const [content, updateContent] = useState(props.location.state.content);
+  // let content = props.location.state.content;
 
   const renderContent = (content) => {
     return content.join("\n \n");
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
+    console.log("og content is", content);
     evt.preventDefault();
     setReplyState(false);
     setSubmitState(true);
-    content.push(response);
-    updateNote(id, content); // talking to the actual database
+    const newContent = await updateNote(id, response);
+    updateContent(newContent);
+    console.log("new content:", newContent);
   };
 
   return (
     <section>
       <div className="title"> {title}</div>
-      <div className="threadReplies">
-        {renderContent(content)}
-        {submitted === true ? <div>{response}</div> : null}
-      </div>
+      <div className="threadReplies">{renderContent(content)}</div>
       <button className="replyButton" onClick={() => setReplyState(true)}>
         Reply
       </button>

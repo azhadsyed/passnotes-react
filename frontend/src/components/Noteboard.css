@@ -1,24 +1,29 @@
-body {
-  font: 14px "Century Gothic", Futura, sans-serif;
+/* body {
+  font: 30px "SourceSansPro";
   margin: 20px;
-}
+} */
 
 .note {
+  font-family: SourceSansPro;
   background: gold;
   text-align: center;
-  height: 300px; 
+  height: 300px;
   width: 300px;
   margin-right: 20px;
   margin-top: 20px;
   line-height: 40px;
+  border: none;
 }
 
-.plusNewNote{
+.plusNewNote {
+  font-family: SourceSansPro;
   background: gold;
   opacity: 0.5;
   text-align: center;
-  height: 300px; 
+  height: 300px;
   width: 300px;
   margin-right: 20px;
   margin-top: 20px;
-  line-height: 40px;}
+  line-height: 40px;
+  border: none;
+}

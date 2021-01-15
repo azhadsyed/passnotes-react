@@ -47,7 +47,7 @@ const Noteboard = (props) => {
   return (
     <div>
       <Link to="/Create">
-        <button className="plusNewNote">New Note</button>
+        <button className="plusNewNote">Create New Note</button>
       </Link>
       {notes}
     </div>

@@ -16,7 +16,7 @@ const ViewReply = (props) => {
     return response;
   };
 
-  const [replyClicked, setReplyState] = useState(false);
+  const [replyMode, setReplyState] = useState(false);
   const [submitted, setSubmitState] = useState(false);
   const [response, setResponse] = useState("");
   const [content, updateContent] = useState(props.location.state.content);
@@ -40,25 +40,25 @@ const ViewReply = (props) => {
     <section>
       <div className="title"> {title}</div>
       <div className="threadReplies">{renderContent(content)}</div>
-      <button className="replyButton" onClick={() => setReplyState(true)}>
-        Reply
-      </button>
-      {replyClicked ? (
+      {replyMode ? (
         <form onSubmit={handleSubmit}>
           <>
             <label>
-              Response:
-              <input
+              <textarea
                 className="replyForm"
                 type="text"
                 value={response}
                 onChange={(e) => setResponse(e.target.value)}
               />
             </label>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Post" />
           </>
         </form>
-      ) : null}
+      ) : (
+        <button className="replyButton" onClick={() => setReplyState(true)}>
+          Reply
+        </button>
+      )}
     </section>
   );
 };

@@ -13,7 +13,10 @@
 }
 
 .replyForm {
-  background: red;
-  height: auto;
-  width: auto;
+  height: 100px;
+  width: 500px;
+  padding-top: 0;
+  padding-left: 0;
+  line-height: 1em;
+  text-align: left;
 }

@@ -1,6 +1,6 @@
 .create {
   border: 2px solid red;
-  width: 30vw;
+  width: 500px;
   height: 60vh;
   display: flex;
   flex-direction: column;

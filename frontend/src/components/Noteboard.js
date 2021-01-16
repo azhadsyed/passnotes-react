@@ -30,7 +30,7 @@ const Noteboard = (props) => {
     const getNotes = async () => {
       let response = await sendHttpRequest(
         "GET",
-        "http://localhost:8080/notes"
+        "http://localhost:8080/api/notes"
       );
       return response;
     };

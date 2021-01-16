@@ -50,8 +50,8 @@ app.use((req, res, next) => {
 });
 
 // route requests
-app.use("/notes", NotesRoutes);
-app.use("/passwords", PasswordsRoutes);
+app.use("/api/notes", NotesRoutes);
+app.use("/api/passwords", PasswordsRoutes);
 
 // bad route error
 app.use((req, res, next) => {

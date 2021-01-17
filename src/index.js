@@ -5,11 +5,14 @@ import Authenticate from "./components/Authenticate";
 import Create from "./components/Create";
 import Noteboard from "./components/Noteboard.js";
 import ViewReply from "./components/ViewReply.js";
-import { sendHttpRequest } from "./components/utilities/helpers.js";
-import "./index.css";
+
 import { ReactComponent as Logo } from "./img/logo.svg";
+import "./index.css";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <Router>

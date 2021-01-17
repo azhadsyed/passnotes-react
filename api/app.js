@@ -4,9 +4,9 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const user = process.env.mongo_user;
-const pass = process.env.mongo_password;
-const dbname = process.env.mongo_dbname;
+const user = process.env.MONGO_USER;
+const pass = process.env.MONGO_PASSWORD;
+const dbname = process.env.MONGO_DBNAME;
 
 mongoose.connect(
   "mongodb+srv://" +

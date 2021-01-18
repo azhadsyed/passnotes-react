@@ -28,10 +28,7 @@ const Noteboard = (props) => {
 
   useEffect(async () => {
     const getNotes = async () => {
-      let response = await sendHttpRequest(
-        "GET",
-        "http://localhost:8080/api/notes"
-      );
+      let response = await sendHttpRequest("GET", "/api/notes");
       return response;
     };
 

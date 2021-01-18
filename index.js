@@ -1,12 +1,15 @@
 //dependencies
+require("dotenv").config();
+
 const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const user = process.env.mongo_user;
-const pass = process.env.mongo_password;
-const dbname = process.env.mongo_dbname;
+const user = process.env.MONGO_USER;
+const pass = process.env.MONGO_PASSWORD;
+const dbname = process.env.MONGO_DBNAME;
 
 mongoose.connect(
   "mongodb+srv://" +
@@ -25,9 +28,12 @@ mongoose.connect(
 //start express
 const app = express();
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "client/build")));
+
 //route definitions
-const NotesRoutes = require("./routes/notes");
-const PasswordsRoutes = require("./routes/passwords");
+const NotesRoutes = require("./api/routes/notes");
+const PasswordsRoutes = require("./api/routes/passwords");
 
 //middleware
 app.use(morgan("dev"));
@@ -70,4 +76,7 @@ app.use((error, req, res, next) => {
   });
 });
 
-module.exports = app;
+const port = process.env.PORT || 5000;
+app.listen(port);
+
+console.log(`API listening on ${port}`);

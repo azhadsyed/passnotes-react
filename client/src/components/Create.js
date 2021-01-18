@@ -194,11 +194,9 @@ const Create = (props) => {
       prompt: promptArray,
       password: passwordArray,
     };
-    sendHttpRequest(
-      "POST",
-      "http://localhost:8080/api/notes",
-      requestBody
-    ).then(() => history.push("/"));
+    sendHttpRequest("POST", "/api/notes", requestBody).then(() =>
+      history.push("/")
+    );
     /*the default behavior on navigation back to Noteboard is to NOT reload the 
     notes so your new note appears at the bottom*/
   };

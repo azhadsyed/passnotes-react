@@ -1,7 +1,6 @@
 # Passnotes
 
-A secret message board hidden behind musical passwords.  Conceptualized & prototyped as part of [Recurse Center](https://github.com/recursecenter/)'s Security Week.  
-[Click here](https://passnotes.herokuapp.com/) to use Passnotes.
+A secret message board hidden behind musical passwords.  Conceptualized & prototyped as part of [Recurse Center](https://github.com/recursecenter/)'s Security Week.  [Click here](https://passnotes.herokuapp.com/) to use Passnotes!
 
 
 # Usage

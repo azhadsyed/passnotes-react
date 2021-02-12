@@ -1,6 +1,6 @@
 # Passnotes
 
-A secret message board hidden behind musical passwords.  Conceptualized & prototyped as part of [Recurse Center]'s (https://github.com/recursecenter/) Security Week.  
+A secret message board hidden behind musical passwords.  Conceptualized & prototyped as part of [Recurse Center](https://github.com/recursecenter/)'s Security Week.  
 [Click here](https://passnotes.herokuapp.com/) to use Passnotes.
 
 
@@ -28,4 +28,4 @@ Once you’ve recorded your musical prompt and confirmed your musical password, 
 Click on the note you want to access.  You’ll be brought to an authentication screen with a piano keyboard.  Turn your volume up– the note’s prompt will play.  If you can play the correct musical password, you will be brought to the note’s message thread, where you can view and reply to its text.  Your replies will save to the note’s thread and become visible to anyone who can view the note.
 
 ## Specs
-Frontend built with React, [create-react-app] (https://github.com/facebook/create-react-app), and [Tone.js] (https://github.com/Tonejs). Backend built with and Express and MongoDB.
+Frontend built with React, [create-react-app](https://github.com/facebook/create-react-app), and [Tone.js](https://github.com/Tonejs). Backend built with and Express and MongoDB.
